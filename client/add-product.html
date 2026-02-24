@@ -11,7 +11,7 @@
 </head>
 
 <body>
-      <header class="header">
+     <header class="header">
         <nav class="navbar">
             <div class="logo">
                 <a href="./index.html"> <img src="./assets/logo.png" alt="logo"></a>
@@ -49,11 +49,23 @@
             </ul>
         </nav>
     </header>
-    
 
-    <div id="productList" class="shopping-cards"></div>
-
-    <script src="./script/products.js"></script>
+<h2>Add Product</h2>
+<form id="productForm" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="Name" required>
+    <textarea name="description" placeholder="Description"></textarea>
+    <input type="text" name="material" placeholder="Material">
+    <input type="number" name="price" placeholder="Price" step="0.01" required>
+    <input type="number" name="rating" placeholder="Rating (1-5)">
+    <input type="number" name="rating_count" placeholder="Rating count">
+    <select name="is_favorite">
+        <option value="0">Not Favorite</option>
+        <option value="1">Favorite</option>
+    </select>
+    <input type="file" name="image" accept="image/*">
+    <button type="submit">Add Product</button>
+</form>
+    <script src="./script/add-product.js"></script>
     <script src="./script/script.js"></script>
 </body>
 

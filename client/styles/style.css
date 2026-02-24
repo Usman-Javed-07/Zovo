@@ -114,6 +114,7 @@ padding: 20px 110px;
     flex-direction: column;
     gap: 5px;
     width: 100%;
+    max-width: 255px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     overflow: hidden;
@@ -187,4 +188,8 @@ cursor: pointer;
   display: block;
   fill: #e3e3e3;
   transition: all 0.3s ease;
+}
+
+#productList {
+    padding: 20px 110px;
 }
