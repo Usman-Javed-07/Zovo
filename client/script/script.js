@@ -4,7 +4,7 @@ links.forEach((link) => {
   if (link.href === window.location.href) link.classList.add("active");
 });
 
- const swiper = new Swiper(".heroSwiper", {
+ if (typeof Swiper !== 'undefined' && document.querySelector('.heroSwiper')) new Swiper(".heroSwiper", {
     loop: true,
     autoplay: {
       delay: 3000,

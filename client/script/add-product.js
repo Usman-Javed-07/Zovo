@@ -3,7 +3,7 @@ form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(form);
 
-    const res = await fetch('http://localhost:5000/api/products', {
+    const res = await fetch(`${API_BASE_URL}/api/products`, {
         method: 'POST',
         body: formData
     });
