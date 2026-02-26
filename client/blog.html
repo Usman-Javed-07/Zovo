@@ -4,52 +4,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zovo</title>
+    <title>Zovo — Blog</title>
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="icon" type="image/png" href="./assets/tab-img.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-       <header class="header">
+    <header class="header">
         <nav class="navbar">
             <div class="logo">
                 <a href="./index.html"> <img src="./assets/logo.png" alt="logo"></a>
             </div>
-            <div class="search-bar"> 
+            <div class="search-bar">
                 <input type="text" placeholder="Search...">
-                 <button class="search-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg></button>
+                <button class="search-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg></button>
             </div>
-            <ul>
-                <li><a href="./index.html">Home</a></li>
-            </ul>
-            <ul>
-                <li><a href="./products.html">Products</a></li>   
-            </ul>
-            <ul>
-                <li><a href="./about.html">About</a></li>   
-            </ul>
-            
-            <ul>
-                <li><a href="./services.html">Services</a></li>
-            </ul>
-            <ul>
-                <li><a href="./contact.html">Contact</a></li>
-            </ul>
-            <ul>
-                <li><a href="./blog.html">Blog</a></li>
-            </ul>
-            <ul>
-                <li><a href="./add-product.html">Add Product</a></li>
-            </ul>
+            <ul><li><a href="./index.html">Home</a></li></ul>
+            <ul><li><a href="./products.html">Products</a></li></ul>
+            <ul><li><a href="./about.html">About</a></li></ul>
+            <ul><li><a href="./services.html">Services</a></li></ul>
+            <ul><li><a href="./contact.html">Contact</a></li></ul>
+            <ul><li><a href="./blog.html">Blog</a></li></ul>
+            <ul><li><a href="./add-product.html">Add Product</a></li></ul>
             <ul>
                 <li><a href="./addToCart.html" class="add-to-cart-btn"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-600v-120H320v-80h120v-120h80v120h120v80H520v120h-80ZM223.5-103.5Q200-127 200-160t23.5-56.5Q247-240 280-240t56.5 23.5Q360-193 360-160t-23.5 56.5Q313-80 280-80t-56.5-23.5Zm400 0Q600-127 600-160t23.5-56.5Q647-240 680-240t56.5 23.5Q760-193 760-160t-23.5 56.5Q713-80 680-80t-56.5-23.5ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z"/></svg></a></li>
             </ul>
             <ul>
-                <li> <a href=""><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg></a></li>
+                <li><a href=""><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg></a></li>
             </ul>
         </nav>
     </header>
+
+    <main>
+
+        <!-- Hero -->
+        <section class="blog-hero">
+            <div class="about-hero-overlay"></div>
+            <div class="about-hero-content">
+                <span class="about-label">The Zovo Journal</span>
+                <h1 class="about-hero-heading">Style, Stories & Inspiration</h1>
+                <p class="about-hero-sub">Tips, trends, and behind-the-scenes from the world of Zovo fashion.</p>
+            </div>
+        </section>
+
+        <!-- Featured Post -->
+        <section class="blog-featured">
+            <div class="blog-featured-image">
+                <img src="./assets/slider3.jpg" alt="Featured Post">
+                <span class="blog-featured-badge">Featured</span>
+            </div>
+            <div class="blog-featured-text">
+                <div class="blog-meta">
+                    <span class="blog-tag">Style Guide</span>
+                    <span class="blog-meta-dot">·</span>
+                    <span class="blog-date">February 18, 2026</span>
+                </div>
+                <h2>The Art of Capsule Wardrobing: Own Less, Look More</h2>
+                <p>A capsule wardrobe isn't about minimalism for its own sake — it's about intention. By curating a small collection of versatile, high-quality pieces, you eliminate decision fatigue and always have something to wear.</p>
+                <p>We break down exactly how to build a 30-piece wardrobe that works for every occasion, from morning meetings to weekend escapes — and why investing in fewer, better pieces always pays off.</p>
+                <a href="#" class="blog-read-more">
+                    Read Full Article
+                    <svg xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="currentColor"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- Latest Posts -->
+        <section class="blog-section">
+            <div class="services-section-header">
+                <span class="about-label">Latest Posts</span>
+                <h2>Fresh from the journal</h2>
+            </div>
+            <div class="blog-grid">
+
+                <article class="blog-card">
+                    <div class="blog-card-image">
+                        <img src="./assets/slider5.jpg" alt="Timeless Pieces">
+                        <span class="blog-card-tag">Essentials</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <span class="blog-date">February 12, 2026</span>
+                        <h3>5 Timeless Pieces Every Wardrobe Needs</h3>
+                        <p>Some garments never go out of style. From the perfect white shirt to a well-cut blazer, these are the non-negotiables.</p>
+                        <a href="#" class="blog-card-link">Read More
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-card-image">
+                        <img src="./assets/slider6.jpg" alt="Layered Looks">
+                        <span class="blog-card-tag">Trends</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <span class="blog-date">February 5, 2026</span>
+                        <h3>How to Master Layered Looks for Any Season</h3>
+                        <p>Layering is both an art and a science. Learn how to combine textures, lengths, and colours without the bulk.</p>
+                        <a href="#" class="blog-card-link">Read More
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-card-image">
+                        <img src="./assets/bfcacc9447c555396cd9803d096d94b13a30f0a5_original.jpeg" alt="Sustainable Fashion">
+                        <span class="blog-card-tag">Sustainability</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <span class="blog-date">January 28, 2026</span>
+                        <h3>Sustainable Fashion: Why What You Wear Matters</h3>
+                        <p>Fast fashion has a cost the price tag doesn't show. We explore how small choices in your wardrobe can drive real change.</p>
+                        <a href="#" class="blog-card-link">Read More
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-card-image">
+                        <img src="./assets/depositphotos_190207834-stock-photo-set-of-casual-men-clothes.jpg" alt="Casual Dressing">
+                        <span class="blog-card-tag">Men's Style</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <span class="blog-date">January 20, 2026</span>
+                        <h3>The Complete Guide to Men's Casual Dressing</h3>
+                        <p>Casual doesn't mean careless. Discover how to put together effortless looks that still turn heads.</p>
+                        <a href="#" class="blog-card-link">Read More
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-card-image">
+                        <img src="./assets/slider1.jpg" alt="Colour Theory">
+                        <span class="blog-card-tag">Colour & Palettes</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <span class="blog-date">January 14, 2026</span>
+                        <h3>Colour Theory: Building a Cohesive Wardrobe Palette</h3>
+                        <p>Understanding which colours work together is the secret to getting dressed with confidence every single day.</p>
+                        <a href="#" class="blog-card-link">Read More
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-card-image">
+                        <img src="./assets/slider4.jpg" alt="Behind the Seams">
+                        <span class="blog-card-tag">Behind Zovo</span>
+                    </div>
+                    <div class="blog-card-body">
+                        <span class="blog-date">January 6, 2026</span>
+                        <h3>Behind the Seams: How Zovo Sources Its Collection</h3>
+                        <p>A look inside our sourcing process — the designers, factories, and values that shape every piece we sell.</p>
+                        <a href="#" class="blog-card-link">Read More
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg>
+                        </a>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="blog-newsletter">
+            <div class="blog-newsletter-inner">
+                <div class="blog-newsletter-text">
+                    <span class="about-label">Stay in the Loop</span>
+                    <h2>Get the latest from the journal</h2>
+                    <p>New articles, style tips, and exclusive offers delivered straight to your inbox. No spam, ever.</p>
+                </div>
+                <form class="blog-newsletter-form">
+                    <input type="email" placeholder="Enter your email address">
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Closing CTA -->
+        <section class="about-closing">
+            <span class="about-label">Ready to Shop?</span>
+            <h2>Turn inspiration into your wardrobe</h2>
+            <p>Browse our latest collection and find pieces worth writing about.</p>
+            <a href="./products.html" class="about-cta-btn">Shop Now</a>
+        </section>
+
+    </main>
 
     <script src="./script/script.js"></script>
 </body>
