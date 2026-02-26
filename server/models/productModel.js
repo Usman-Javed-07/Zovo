@@ -1,7 +1,7 @@
 const db = require('../config/db');
 
 const Product = {
-    create: (data, callback) => {
+    create: async (data) => {
         const sql = `
             INSERT INTO products
             (name, description, material, price, rating, rating_count, image, is_favorite)
@@ -17,11 +17,13 @@ const Product = {
             data.image,
             data.is_favorite || 0
         ];
-        db.query(sql, values, callback);
+        const [result] = await db.execute(sql, values);
+        return result;
     },
 
-    getAll: (callback) => {
-        db.query(`SELECT * FROM products ORDER BY created_at DESC`, callback);
+    getAll: async () => {
+        const [rows] = await db.execute(`SELECT * FROM products ORDER BY created_at DESC`);
+        return rows;
     }
 };
 
