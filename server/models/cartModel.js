@@ -54,14 +54,14 @@ class CartModel {
         return rows;
     }
 
-    static async getCartCount(userId) {
-        const [rows] = await db.execute(
-            "SELECT SUM(quantity) as total FROM cart WHERE user_id = ?",
-            [userId]
-        );
+static async getCartCount(userId) {
+    const [rows] = await db.execute(
+        "SELECT COUNT(*) as total FROM cart WHERE user_id = ?",
+        [userId]
+    );
 
-        return rows[0].total || 0;
-    }
+    return rows[0].total || 0;
+}
 }
 
 module.exports = CartModel;
