@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zovo — My Profile</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="icon" type="image/png" href="./assets/tab-img.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="./index.html"><img src="./assets/logo.png" alt="logo"></a>
+            </div>
+            <ul><li><a href="./index.html">Home</a></li></ul>
+            <ul><li><a href="./products.html">Products</a></li></ul>
+            <ul><li><a href="./about.html">About</a></li></ul>
+            <ul><li><a href="./services.html">Services</a></li></ul>
+            <ul><li><a href="./contact.html">Contact</a></li></ul>
+            <ul><li><a href="./blog.html">Blog</a></li></ul>
+            <ul>
+                <li>
+                    <span class="cart-icon-wrapper">
+                        <a href="./addToCart.html" class="add-to-cart-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-600v-120H320v-80h120v-120h80v120h120v80H520v120h-80ZM223.5-103.5Q200-127 200-160t23.5-56.5Q247-240 280-240t56.5 23.5Q360-193 360-160t-23.5 56.5Q313-80 280-80t-56.5-23.5Zm400 0Q600-127 600-160t23.5-56.5Q647-240 680-240t56.5 23.5Q760-193 760-160t-23.5 56.5Q713-80 680-80t-56.5-23.5ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z"/></svg>
+                        </a>
+                        <span id="cartCount" class="cart-count">0</span>
+                    </span>
+                </li>
+            </ul>
+            <div class="user-menu">
+                <div class="user-info" id="userInfo">
+                    <span id="userName">Guest</span>
+                    <img id="userImage" src="./assets/default-avatar.png" alt="User">
+                    <span class="dropdown-icon">&#9660;</span>
+                </div>
+                <div class="dropdown" id="dropdownMenu"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="profile-main">
+        <div class="profile-card">
+
+            <!-- Avatar section -->
+            <div class="profile-avatar-wrap">
+                <div class="profile-avatar-ring">
+                    <img id="profileAvatar" src="./assets/default-avatar.png" alt="Avatar">
+                </div>
+                <label class="profile-avatar-change" for="avatarInput">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor">
+                        <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
+                    </svg>
+                    Change Photo
+                </label>
+                <input type="file" id="avatarInput" accept="image/*" style="display:none;">
+            </div>
+
+            <!-- User info display -->
+            <div class="profile-info-grid">
+                <div class="profile-info-item">
+                    <span class="profile-label">Name</span>
+                    <span class="profile-value" id="displayName">—</span>
+                </div>
+                <div class="profile-info-item">
+                    <span class="profile-label">Email</span>
+                    <span class="profile-value" id="displayEmail">—</span>
+                </div>
+                <div class="profile-info-item">
+                    <span class="profile-label">Role</span>
+                    <span class="profile-value" id="displayRole">—</span>
+                </div>
+                <div class="profile-info-item">
+                    <span class="profile-label">Account Status</span>
+                    <span class="profile-value" id="displayVerified">—</span>
+                </div>
+            </div>
+
+            <hr class="auth-divider">
+
+            <!-- Edit form -->
+            <h3 class="profile-section-title">Edit Profile</h3>
+            <div id="profileMsg" class="auth-msg" style="display:none;"></div>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="editName">Display Name</label>
+                    <input type="text" id="editName" name="name" placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label>Profile Photo</label>
+                    <div class="profile-preview-wrap">
+                        <img id="previewImg" src="./assets/default-avatar.png" alt="Preview">
+                        <span class="profile-preview-hint">Select a photo using the button above</span>
+                    </div>
+                </div>
+                <button type="submit" class="auth-btn" id="saveBtn">Save Changes</button>
+            </form>
+
+        </div>
+    </main>
+
+    <script src="./script/config.js"></script>
+    <script src="./script/script.js"></script>
+    <script src="./script/navbar.js"></script>
+    <script src="./script/profile.js"></script>
+</body>
+</html>

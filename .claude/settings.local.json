@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -l \"user-menu\\\\|navbar.js\\\\|loadUser\\\\|dropdownMenu\" d:/Work/zovo/client/*.html d:/Work/zovo/client/script/*.js)"
+    ]
+  }
+}

@@ -26,7 +26,6 @@
             <ul><li><a href="./services.html">Services</a></li></ul>
             <ul><li><a href="./contact.html">Contact</a></li></ul>
             <ul><li><a href="./blog.html">Blog</a></li></ul>
-            <ul><li><a href="./add-product.html">Add Product</a></li></ul>
             <ul>
                 <li>
                     <span class="cart-icon-wrapper">
@@ -35,9 +34,14 @@
                     </span>
                 </li>
             </ul>
-            <ul>
-                <li><a href=""><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg></a></li>
-            </ul>
+            <div class="user-menu">
+                <div class="user-info" id="userInfo">
+                    <span id="userName">Guest</span>
+                    <img id="userImage" src="./assets/default-avatar.png" alt="User">
+                    <span class="dropdown-icon">&#9660;</span>
+                </div>
+                <div class="dropdown" id="dropdownMenu"></div>
+            </div>
         </nav>
     </header>
 

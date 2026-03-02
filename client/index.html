@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="icon" type="image/png" href="./assets/tab-img.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,20 +23,24 @@
             <div class="logo">
                 <a href="./index.html"> <img src="./assets/logo.png" alt="logo"></a>
             </div>
-            <div class="search-bar"> 
+            <div class="search-bar">
                 <input type="text" placeholder="Search...">
-                 <button class="search-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg></button>
+                <button class="search-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                        viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                        <path
+                            d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+                    </svg></button>
             </div>
             <ul>
                 <li><a href="./index.html">Home</a></li>
             </ul>
             <ul>
-                <li><a href="./products.html">Products</a></li>   
+                <li><a href="./products.html">Products</a></li>
             </ul>
             <ul>
-                <li><a href="./about.html">About</a></li>   
+                <li><a href="./about.html">About</a></li>
             </ul>
-            
+
             <ul>
                 <li><a href="./services.html">Services</a></li>
             </ul>
@@ -46,241 +51,296 @@
                 <li><a href="./blog.html">Blog</a></li>
             </ul>
             <ul>
-                <li><a href="./add-product.html">Add Product</a></li>
-            </ul>
-            <ul>
                 <li>
                     <span class="cart-icon-wrapper">
-                        <a href="./addToCart.html" class="add-to-cart-btn"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-600v-120H320v-80h120v-120h80v120h120v80H520v120h-80ZM223.5-103.5Q200-127 200-160t23.5-56.5Q247-240 280-240t56.5 23.5Q360-193 360-160t-23.5 56.5Q313-80 280-80t-56.5-23.5Zm400 0Q600-127 600-160t23.5-56.5Q647-240 680-240t56.5 23.5Q760-193 760-160t-23.5 56.5Q713-80 680-80t-56.5-23.5ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z"/></svg></a>
+                        <a href="./addToCart.html" class="add-to-cart-btn"><svg xmlns="http://www.w3.org/2000/svg"
+                                height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3">
+                                <path
+                                    d="M440-600v-120H320v-80h120v-120h80v120h120v80H520v120h-80ZM223.5-103.5Q200-127 200-160t23.5-56.5Q247-240 280-240t56.5 23.5Q360-193 360-160t-23.5 56.5Q313-80 280-80t-56.5-23.5Zm400 0Q600-127 600-160t23.5-56.5Q647-240 680-240t56.5 23.5Q760-193 760-160t-23.5 56.5Q713-80 680-80t-56.5-23.5ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z" />
+                            </svg></a>
                         <span id="cartCount" class="cart-count">0</span>
                     </span>
                 </li>
             </ul>
-            <ul>
+            <!-- <ul>
                 <li> <a href=""><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg></a></li>
-            </ul>
+            </ul> -->
+            <div class="user-menu">
+                <div class="user-info" id="userInfo">
+                    <span id="userName">Guest</span>
+                    <img id="userImage" src="default.png" alt="User Image" />
+                    <span class="dropdown-icon">▼</span>
+                </div>
+                <div class="dropdown" id="dropdownMenu"></div>
+            </div>
         </nav>
     </header>
-  
     <main>
-<section class="hero">
-  <div class="swiper heroSwiper">
-    <div class="swiper-wrapper">
+        <section class="hero">
+            <div class="swiper heroSwiper">
+                <div class="swiper-wrapper">
 
-      <div class="swiper-slide">
-        <img src="./assets//slider1.jpg" />
-        <div class="overlay">
-          <h1>Welcome to My Website</h1>
-          <p>Best deals are here</p>
-        </div>
-      </div>
+                    <div class="swiper-slide">
+                        <img src="./assets//slider1.jpg" />
+                        <div class="overlay">
+                            <h1>Welcome to My Website</h1>
+                            <p>Best deals are here</p>
+                        </div>
+                    </div>
 
-      <div class="swiper-slide">
-        <img src="./assets/slider2.jpg" />
-        <div class="overlay">
-          <h1>Big Discounts</h1>
-          <p>Shop now and save more</p>
-        </div>
-      </div>
+                    <div class="swiper-slide">
+                        <img src="./assets/slider2.jpg" />
+                        <div class="overlay">
+                            <h1>Big Discounts</h1>
+                            <p>Shop now and save more</p>
+                        </div>
+                    </div>
 
-      <div class="swiper-slide">
-        <img src="./assets/slider3.jpg" />
-        <div class="overlay">
-          <h1>New Collection</h1>
-          <p>Latest arrivals available</p>
-        </div>
-      </div>
+                    <div class="swiper-slide">
+                        <img src="./assets/slider3.jpg" />
+                        <div class="overlay">
+                            <h1>New Collection</h1>
+                            <p>Latest arrivals available</p>
+                        </div>
+                    </div>
 
-       <div class="swiper-slide">
-        <img src="./assets/slider4.jpg" />
-        <div class="overlay">
-          <!-- <h1>New Collection</h1>
+                    <div class="swiper-slide">
+                        <img src="./assets/slider4.jpg" />
+                        <div class="overlay">
+                            <!-- <h1>New Collection</h1>
           <p>Latest arrivals available</p> -->
-        </div>
-      </div>
+                        </div>
+                    </div>
 
-       <div class="swiper-slide">
-        <img src="./assets/slider5.jpg" />
-        <div class="overlay">
-          <!-- <h1>New Collection</h1>
+                    <div class="swiper-slide">
+                        <img src="./assets/slider5.jpg" />
+                        <div class="overlay">
+                            <!-- <h1>New Collection</h1>
           <p>Latest arrivals available</p> -->
-        </div>
-      </div>
+                        </div>
+                    </div>
 
-       <div class="swiper-slide">
-        <img src="./assets/slider6.jpg" />
-        <div class="overlay">
-          <!-- <h1>New Collection</h1>
+                    <div class="swiper-slide">
+                        <img src="./assets/slider6.jpg" />
+                        <div class="overlay">
+                            <!-- <h1>New Collection</h1>
           <p>Latest arrivals available</p> -->
-        </div>
-      </div>
+                        </div>
+                    </div>
 
-    </div>
+                </div>
 
-    <!-- Pagination -->
-    <div class="swiper-pagination"></div>
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
 
-    <!-- Navigation -->
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-  </div>
-</section>
+                <!-- Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </section>
 
 
 
-      <!-- ── Features Strip ── -->
-      <section class="home-features-strip">
-          <div class="home-feature-item">
-              <div class="home-feature-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#5a97f9"><path d="M80-160v-400l200-240h560l80 240v400H80Zm440-80h320v-280H160v280h320Zm-320-80h100v-120H200v120Zm360 0h100v-120H560v120ZM254-560h452l-60-180H314l-60 180Zm206 280Z"/></svg>
-              </div>
-              <div>
-                  <h4>Free Shipping</h4>
-                  <p>On all orders over $50</p>
-              </div>
-          </div>
-          <div class="home-feature-item">
-              <div class="home-feature-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#5a97f9"><path d="M480-80q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Zm0-84q97-30 162-118.5T718-480H480V252l-240 90v178q0 7 .5 13t1.5 13h238v-26Z"/></svg>
-              </div>
-              <div>
-                  <h4>Quality Guarantee</h4>
-                  <p>Every piece is handpicked</p>
-              </div>
-          </div>
-          <div class="home-feature-item">
-              <div class="home-feature-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#5a97f9"><path d="M280-280h200v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z"/></svg>
-              </div>
-              <div>
-                  <h4>Easy Returns</h4>
-                  <p>30-day hassle-free policy</p>
-              </div>
-          </div>
-          <div class="home-feature-item">
-              <div class="home-feature-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#5a97f9"><path d="M240-160q-66 0-113-47t-47-113v-480h720v480q0 66-47 113T640-160H240Zm0-80h400q33 0 56.5-23.5T720-320v-400H160v400q0 33 23.5 56.5T240-240Zm200-120q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T480-480q0-17-11.5-28.5T440-520q-17 0-28.5 11.5T400-480q0 17 11.5 28.5T440-440ZM240-760v-80h480v80H240Z"/></svg>
-              </div>
-              <div>
-                  <h4>Secure Payment</h4>
-                  <p>100% safe & encrypted</p>
-              </div>
-          </div>
-      </section>
+        <!-- ── Features Strip ── -->
+        <section class="home-features-strip">
+            <div class="home-feature-item">
+                <div class="home-feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px"
+                        fill="#5a97f9">
+                        <path
+                            d="M80-160v-400l200-240h560l80 240v400H80Zm440-80h320v-280H160v280h320Zm-320-80h100v-120H200v120Zm360 0h100v-120H560v120ZM254-560h452l-60-180H314l-60 180Zm206 280Z" />
+                    </svg>
+                </div>
+                <div>
+                    <h4>Free Shipping</h4>
+                    <p>On all orders over $50</p>
+                </div>
+            </div>
+            <div class="home-feature-item">
+                <div class="home-feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px"
+                        fill="#5a97f9">
+                        <path
+                            d="M480-80q-139-35-229.5-159.5T160-516v-244l320-120 320 120v244q0 152-90.5 276.5T480-80Zm0-84q97-30 162-118.5T718-480H480V252l-240 90v178q0 7 .5 13t1.5 13h238v-26Z" />
+                    </svg>
+                </div>
+                <div>
+                    <h4>Quality Guarantee</h4>
+                    <p>Every piece is handpicked</p>
+                </div>
+            </div>
+            <div class="home-feature-item">
+                <div class="home-feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px"
+                        fill="#5a97f9">
+                        <path
+                            d="M280-280h200v-80H280v80Zm0-160h400v-80H280v80Zm0-160h400v-80H280v80Zm-80 480q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z" />
+                    </svg>
+                </div>
+                <div>
+                    <h4>Easy Returns</h4>
+                    <p>30-day hassle-free policy</p>
+                </div>
+            </div>
+            <div class="home-feature-item">
+                <div class="home-feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px"
+                        fill="#5a97f9">
+                        <path
+                            d="M240-160q-66 0-113-47t-47-113v-480h720v480q0 66-47 113T640-160H240Zm0-80h400q33 0 56.5-23.5T720-320v-400H160v400q0 33 23.5 56.5T240-240Zm200-120q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T480-480q0-17-11.5-28.5T440-520q-17 0-28.5 11.5T400-480q0 17 11.5 28.5T440-440ZM240-760v-80h480v80H240Z" />
+                    </svg>
+                </div>
+                <div>
+                    <h4>Secure Payment</h4>
+                    <p>100% safe & encrypted</p>
+                </div>
+            </div>
+        </section>
 
-      <!-- ── Shop by Category ── -->
-      <section class="home-categories-section">
-          <div class="services-section-header">
-              <span class="about-label">Browse by Style</span>
-              <h2>Shop the Look You Want</h2>
-          </div>
-          <div class="home-categories-grid">
-              <div class="home-category-card">
-                  <img src="./assets/slider1.jpg" alt="Men's Fashion">
-                  <div class="home-category-overlay">
-                      <span>Men's Fashion</span>
-                      <a href="./products.html">Shop Now</a>
-                  </div>
-              </div>
-              <div class="home-category-card home-category-card--tall">
-                  <img src="./assets/slider2.jpg" alt="Women's Fashion">
-                  <div class="home-category-overlay">
-                      <span>Women's Fashion</span>
-                      <a href="./products.html">Shop Now</a>
-                  </div>
-              </div>
-              <div class="home-category-card">
-                  <img src="./assets/slider4.jpg" alt="Accessories">
-                  <div class="home-category-overlay">
-                      <span>Accessories</span>
-                      <a href="./products.html">Shop Now</a>
-                  </div>
-              </div>
-              <div class="home-category-card">
-                  <img src="./assets/slider5.jpg" alt="New Arrivals">
-                  <div class="home-category-overlay">
-                      <span>New Arrivals</span>
-                      <a href="./products.html">Shop Now</a>
-                  </div>
-              </div>
-          </div>
-      </section>
+        <!-- ── Shop by Category ── -->
+        <section class="home-categories-section">
+            <div class="services-section-header">
+                <span class="about-label">Browse by Style</span>
+                <h2>Shop the Look You Want</h2>
+            </div>
+            <div class="home-categories-grid">
+                <div class="home-category-card">
+                    <img src="./assets/slider1.jpg" alt="Men's Fashion">
+                    <div class="home-category-overlay">
+                        <span>Men's Fashion</span>
+                        <a href="./products.html">Shop Now</a>
+                    </div>
+                </div>
+                <div class="home-category-card home-category-card--tall">
+                    <img src="./assets/slider2.jpg" alt="Women's Fashion">
+                    <div class="home-category-overlay">
+                        <span>Women's Fashion</span>
+                        <a href="./products.html">Shop Now</a>
+                    </div>
+                </div>
+                <div class="home-category-card">
+                    <img src="./assets/slider4.jpg" alt="Accessories">
+                    <div class="home-category-overlay">
+                        <span>Accessories</span>
+                        <a href="./products.html">Shop Now</a>
+                    </div>
+                </div>
+                <div class="home-category-card">
+                    <img src="./assets/slider5.jpg" alt="New Arrivals">
+                    <div class="home-category-overlay">
+                        <span>New Arrivals</span>
+                        <a href="./products.html">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-      <!-- ── About Teaser ── -->
-      <section class="home-about-teaser">
-          <div class="home-about-teaser-image">
-              <img src="./assets/slider6.jpg" alt="About Zovo">
-          </div>
-          <div class="home-about-teaser-text">
-              <span class="about-label">Our Story</span>
-              <h2>Fashion That Speaks For You</h2>
-              <p>Zovo was built on a simple belief — that great style should be accessible, intentional, and timeless. We source the finest pieces from around the world, curated for people who care about how they present themselves.</p>
-              <p>Every product in our collection is selected with purpose: quality materials, ethical sourcing, and designs that outlast every trend cycle.</p>
-              <div class="home-about-stats">
-                  <div class="home-about-stat">
-                      <span>500+</span>
-                      <p>Products</p>
-                  </div>
-                  <div class="home-about-stat">
-                      <span>40+</span>
-                      <p>Countries</p>
-                  </div>
-                  <div class="home-about-stat">
-                      <span>12K+</span>
-                      <p>Happy Customers</p>
-                  </div>
-              </div>
-              <a href="./about.html" class="about-cta-btn">Our Story</a>
-          </div>
-      </section>
+        <!-- ── About Teaser ── -->
+        <section class="home-about-teaser">
+            <div class="home-about-teaser-image">
+                <img src="./assets/slider6.jpg" alt="About Zovo">
+            </div>
+            <div class="home-about-teaser-text">
+                <span class="about-label">Our Story</span>
+                <h2>Fashion That Speaks For You</h2>
+                <p>Zovo was built on a simple belief — that great style should be accessible, intentional, and timeless.
+                    We source the finest pieces from around the world, curated for people who care about how they
+                    present themselves.</p>
+                <p>Every product in our collection is selected with purpose: quality materials, ethical sourcing, and
+                    designs that outlast every trend cycle.</p>
+                <div class="home-about-stats">
+                    <div class="home-about-stat">
+                        <span>500+</span>
+                        <p>Products</p>
+                    </div>
+                    <div class="home-about-stat">
+                        <span>40+</span>
+                        <p>Countries</p>
+                    </div>
+                    <div class="home-about-stat">
+                        <span>12K+</span>
+                        <p>Happy Customers</p>
+                    </div>
+                </div>
+                <a href="./about.html" class="about-cta-btn">Our Story</a>
+            </div>
+        </section>
 
-      <!-- ── Services Highlights ── -->
-      <section class="home-services-teaser">
-          <div class="services-section-header">
-              <span class="about-label">What We Offer</span>
-              <h2>More Than Just a Store</h2>
-          </div>
-          <div class="home-services-grid">
-              <div class="home-service-card">
-                  <div class="home-service-icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#5a97f9"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z"/></svg>
-                  </div>
-                  <h3>Personal Styling</h3>
-                  <p>One-on-one consultations to build a wardrobe that truly works for you and your lifestyle.</p>
-                  <a href="./services.html" class="home-service-link">Learn more <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></a>
-              </div>
-              <div class="home-service-card">
-                  <div class="home-service-icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#5a97f9"><path d="M160-80v-160q0-34 23.5-57t56.5-23h480q33 0 56.5 23t23.5 57v160H160Zm80-80h480v-80H240v80ZM40-320v-440q0-33 23.5-56.5T120-840h720q33 0 56.5 23.5T920-760v440H40Zm80-80h760v-360H120v360Zm480-80H360v-80h240v80Zm-480 80v-360 360Z"/></svg>
-                  </div>
-                  <h3>Virtual Fitting</h3>
-                  <p>Try before you buy with our immersive virtual try-on experience from any device.</p>
-                  <a href="./services.html" class="home-service-link">Learn more <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></a>
-              </div>
-              <div class="home-service-card">
-                  <div class="home-service-icon">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#5a97f9"><path d="M440-240h80v-120h120v-80H520v-120h-80v120H320v80h120v120ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg>
-                  </div>
-                  <h3>Gift Curation</h3>
-                  <p>Thoughtfully assembled gift sets crafted for every special occasion and recipient.</p>
-                  <a href="./services.html" class="home-service-link">Learn more <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></svg></a>
-              </div>
-          </div>
-      </section>
+        <!-- ── Services Highlights ── -->
+        <section class="home-services-teaser">
+            <div class="services-section-header">
+                <span class="about-label">What We Offer</span>
+                <h2>More Than Just a Store</h2>
+            </div>
+            <div class="home-services-grid">
+                <div class="home-service-card">
+                    <div class="home-service-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"
+                            fill="#5a97f9">
+                            <path
+                                d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z" />
+                        </svg>
+                    </div>
+                    <h3>Personal Styling</h3>
+                    <p>One-on-one consultations to build a wardrobe that truly works for you and your lifestyle.</p>
+                    <a href="./services.html" class="home-service-link">Learn more <svg
+                            xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px"
+                            fill="currentColor">
+                            <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z" />
+                        </svg></a>
+                </div>
+                <div class="home-service-card">
+                    <div class="home-service-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"
+                            fill="#5a97f9">
+                            <path
+                                d="M160-80v-160q0-34 23.5-57t56.5-23h480q33 0 56.5 23t23.5 57v160H160Zm80-80h480v-80H240v80ZM40-320v-440q0-33 23.5-56.5T120-840h720q33 0 56.5 23.5T920-760v440H40Zm80-80h760v-360H120v360Zm480-80H360v-80h240v80Zm-480 80v-360 360Z" />
+                        </svg>
+                    </div>
+                    <h3>Virtual Fitting</h3>
+                    <p>Try before you buy with our immersive virtual try-on experience from any device.</p>
+                    <a href="./services.html" class="home-service-link">Learn more <svg
+                            xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px"
+                            fill="currentColor">
+                            <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z" />
+                        </svg></a>
+                </div>
+                <div class="home-service-card">
+                    <div class="home-service-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"
+                            fill="#5a97f9">
+                            <path
+                                d="M440-240h80v-120h120v-80H520v-120h-80v120H320v80h120v120ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z" />
+                        </svg>
+                    </div>
+                    <h3>Gift Curation</h3>
+                    <p>Thoughtfully assembled gift sets crafted for every special occasion and recipient.</p>
+                    <a href="./services.html" class="home-service-link">Learn more <svg
+                            xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px"
+                            fill="currentColor">
+                            <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z" />
+                        </svg></a>
+                </div>
+            </div>
+        </section>
 
-      <!-- ── Trending Products (original — untouched) ── -->
-      <section class="trending-products-section">
-      <h1 class="trending-products-heading">Trending Products <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="35px" fill="#fff"><path d="m136-240-56-56 296-298 160 160 208-206H640v-80h240v240h-80v-104L536-320 376-480 136-240Z"/></svg></h1>
-      <div id="productList" class="shopping-cards"></div>
-      </section>
+        <!-- ── Trending Products (original — untouched) ── -->
+        <section class="trending-products-section">
+            <h1 class="trending-products-heading">Trending Products <svg xmlns="http://www.w3.org/2000/svg"
+                    height="35px" viewBox="0 -960 960 960" width="35px" fill="#fff">
+                    <path
+                        d="m136-240-56-56 296-298 160 160 208-206H640v-80h240v240h-80v-104L536-320 376-480 136-240Z" />
+                </svg></h1>
+            <div id="productList" class="shopping-cards"></div>
+        </section>
 
-      <!-- ── Closing CTA ── -->
-      <section class="about-closing">
-          <span class="about-label">Explore More</span>
-          <h2>Discover Your Perfect Style</h2>
-          <p>Browse our full collection and find pieces curated just for you.</p>
-          <a href="./products.html" class="about-cta-btn">Shop All Products</a>
-      </section>
+        <!-- ── Closing CTA ── -->
+        <section class="about-closing">
+            <span class="about-label">Explore More</span>
+            <h2>Discover Your Perfect Style</h2>
+            <p>Browse our full collection and find pieces curated just for you.</p>
+            <a href="./products.html" class="about-cta-btn">Shop All Products</a>
+        </section>
 
     </main>
 
