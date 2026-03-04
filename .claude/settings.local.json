@@ -1,7 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm install stripe socket.io pdfkit)"
+      "Bash(npm install stripe socket.io pdfkit)",
+      "Bash(git credential:*)",
+      "Bash(cmdkey /delete:git:https://github.com)",
+      "Bash(cmdkey /delete:https://github.com)",
+      "Bash(cmdkey /list)",
+      "Bash(findstr -i github)",
+      "Bash(powershell -Command \"Get-StoredCredential -Target ''*github*'' 2>&1 | Select-Object -Property Target,UserName\")",
+      "Bash(git credential-manager github logout ksa4sale)",
+      "Bash(git credential-manager github list)"
     ]
   }
 }
