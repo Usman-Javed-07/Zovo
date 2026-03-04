@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel — Zovo</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="icon" type="image/png" href="./assets/tab-img.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="./index.html"><img src="./assets/logo.png" alt="logo"></a>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+                <button class="search-btn" type="submit"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg></button>
+            </div>
+            <ul><li><a href="./index.html">Home</a></li></ul>
+            <ul><li><a href="./products.html">Products</a></li></ul>
+            <ul><li><a href="./add-product.html">Add Product</a></li></ul>
+            <div class="user-menu">
+                <div class="user-info" id="userInfo">
+                    <span id="userName">Guest</span>
+                    <img id="userImage" src="./assets/default-avatar.png" alt="User">
+                    <span class="dropdown-icon">&#9660;</span>
+                </div>
+                <div class="dropdown" id="dropdownMenu"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="admin-wrapper">
+        <h2 class="page-title">Admin Panel</h2>
+
+        <!-- Tabs -->
+        <div class="admin-tabs">
+            <button class="tab-btn active" data-tab="orders">Orders</button>
+            <button class="tab-btn" data-tab="refunds">Refunds</button>
+            <button class="tab-btn" data-tab="coupons">Coupons</button>
+            <button class="tab-btn" data-tab="shipments">Shipments</button>
+        </div>
+
+        <!-- ORDERS TAB -->
+        <section id="tab-orders" class="tab-content active">
+            <h3>All Orders</h3>
+            <div id="adminOrdersContainer" class="admin-table-wrapper">
+                <p class="loading-text">Loading orders...</p>
+            </div>
+        </section>
+
+        <!-- REFUNDS TAB -->
+        <section id="tab-refunds" class="tab-content">
+            <h3>Refund Requests</h3>
+            <div id="adminRefundsContainer" class="admin-table-wrapper">
+                <p class="loading-text">Loading refunds...</p>
+            </div>
+        </section>
+
+        <!-- COUPONS TAB -->
+        <section id="tab-coupons" class="tab-content">
+            <h3>Manage Coupons</h3>
+
+            <form id="couponForm" class="coupon-create-form">
+                <div class="form-row">
+                    <input type="text" id="cp_code" placeholder="Code (e.g. SAVE15)" required>
+                    <select id="cp_type">
+                        <option value="percentage">Percentage %</option>
+                        <option value="fixed">Fixed $</option>
+                    </select>
+                    <input type="number" id="cp_value" placeholder="Value" step="0.01" required>
+                    <input type="number" id="cp_min" placeholder="Min Order ($)" step="0.01">
+                    <input type="number" id="cp_max_uses" placeholder="Max Uses">
+                    <input type="datetime-local" id="cp_expires">
+                    <button type="submit" class="btn-primary">Add Coupon</button>
+                </div>
+                <p id="couponCreateMsg" class="coupon-msg"></p>
+            </form>
+
+            <div id="adminCouponsContainer" class="admin-table-wrapper">
+                <p class="loading-text">Loading coupons...</p>
+            </div>
+        </section>
+
+        <!-- SHIPMENTS TAB -->
+        <section id="tab-shipments" class="tab-content">
+            <h3>Create Shipment</h3>
+
+            <form id="shipmentForm" class="shipment-create-form">
+                <div class="form-row">
+                    <input type="number" id="sh_order_id" placeholder="Order ID" required>
+                    <input type="text" id="sh_courier" placeholder="Courier (e.g. Leopards)">
+                    <input type="text" id="sh_tracking" placeholder="Tracking Number">
+                    <input type="date" id="sh_delivery" placeholder="Est. Delivery">
+                    <button type="submit" class="btn-primary">Create Shipment</button>
+                </div>
+                <p id="shipmentMsg" class="shipment-msg"></p>
+            </form>
+
+            <h3 style="margin-top:2rem">All Shipments</h3>
+            <div id="adminShipmentsContainer" class="admin-table-wrapper">
+                <p class="loading-text">Loading shipments...</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="./script/config.js"></script>
+    <script src="./script/script.js"></script>
+    <script src="./script/navbar.js"></script>
+    <script src="./script/admin-orders.js"></script>
+</body>
+</html>

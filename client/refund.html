@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zovo — Products</title>
+    <title>Refunds — Zovo</title>
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="icon" type="image/png" href="./assets/tab-img.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
-
 <body>
     <header class="header">
         <nav class="navbar">
             <div class="logo">
-                <a href="./index.html"> <img src="./assets/logo.png" alt="logo"></a>
+                <a href="./index.html"><img src="./assets/logo.png" alt="logo"></a>
             </div>
             <div class="search-bar">
                 <input type="text" placeholder="Search...">
@@ -45,32 +43,47 @@
         </nav>
     </header>
 
-    <main>
+    <main class="refund-wrapper">
+        <h2 class="page-title">Refund Requests</h2>
 
-        <!-- Page Header -->
-        <section class="products-page-header">
-            <div class="about-hero-overlay"></div>
-            <div class="about-hero-content">
-                <span class="about-label">Our Collection</span>
-                <h1 class="about-hero-heading">Shop All Products</h1>
-                <p class="about-hero-sub">Curated fashion for every style, occasion, and season.</p>
-            </div>
-        </section>
-
-        <!-- Products Listing -->
-        <div class="products-listing-heading">
-            <h2>All Products</h2>
-            <span class="about-label">Zovo Collection</span>
+        <!-- Request Refund Form -->
+        <div class="refund-form-card">
+            <h3>Request a Refund</h3>
+            <form id="refundForm">
+                <div class="form-group">
+                    <label>Order ID</label>
+                    <input type="number" id="refund_order_id" placeholder="Enter your Order ID" required>
+                </div>
+                <div class="form-group">
+                    <label>Refund Amount ($)</label>
+                    <input type="number" id="refund_amount" step="0.01" placeholder="e.g. 25.00" required>
+                </div>
+                <div class="form-group">
+                    <label>Reason</label>
+                    <textarea id="refund_reason" rows="3" placeholder="Why are you requesting a refund?" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Refund Method</label>
+                    <select id="refund_method">
+                        <option value="wallet">Wallet (instant)</option>
+                        <option value="stripe">Original Payment (Stripe)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary">Submit Request</button>
+                <p id="refundMsg" class="refund-msg"></p>
+            </form>
         </div>
 
-        <div id="productList" class="shopping-cards"></div>
-
+        <!-- My Refund History -->
+        <h3 class="section-heading">My Refund History</h3>
+        <div id="refundsContainer" class="refunds-container">
+            <p class="loading-text">Loading...</p>
+        </div>
     </main>
 
     <script src="./script/config.js"></script>
     <script src="./script/script.js"></script>
     <script src="./script/navbar.js"></script>
-    <script src="./script/products.js"></script>
+    <script src="./script/refund.js"></script>
 </body>
-
 </html>

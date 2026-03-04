@@ -34,4 +34,18 @@ const authorize = (roles = []) => {
     };
 };
 
-module.exports = { protect, authorize };
+// Soft auth: attaches req.user if token valid, but never rejects
+const optionalAuth = async (req, _res, next) => {
+    try {
+        const authHeader = req.headers.authorization;
+        if (authHeader && authHeader.startsWith("Bearer ")) {
+            const token   = authHeader.split(" ")[1];
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const user    = await UserModel.findById(decoded.id);
+            if (user) req.user = user;
+        }
+    } catch (_) {}
+    next();
+};
+
+module.exports = { protect, authorize, optionalAuth };

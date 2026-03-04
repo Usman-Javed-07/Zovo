@@ -62,6 +62,10 @@ static async getCartCount(userId) {
 
     return rows[0].total || 0;
 }
+
+static async clearCart(userId) {
+    return db.execute("DELETE FROM cart WHERE user_id = ?", [userId]);
+}
 }
 
 module.exports = CartModel;

@@ -13,7 +13,10 @@
 // Cart count (API_BASE_URL comes from config.js loaded before this script)
 async function loadCartCount() {
     try {
-        const res = await fetch(`${API_BASE_URL}/api/cart/count`);
+        const token = localStorage.getItem("token");
+        const res = await fetch(`${API_BASE_URL}/api/cart/count`, {
+            headers: token ? { "Authorization": `Bearer ${token}` } : {}
+        });
         const data = await res.json();
         const badge = document.getElementById("cartCount");
         if (badge) badge.textContent = data.count || 0;
@@ -52,7 +55,12 @@ function loadUser() {
         }
 
         dropdownEl.innerHTML = `
-            ${user.role === "admin" ? '<a href="./add-product.html">Add Product</a>' : ""}
+            ${user.role === "admin" ? `
+                <a href="./admin-orders.html">Admin Panel</a>
+                <a href="./add-product.html">Add Product</a>
+            ` : ""}
+            <a href="./order-history.html">My Orders</a>
+            <a href="./wallet.html">My Wallet</a>
             <a href="./profile.html">Profile</a>
             <button onclick="logout()">Logout</button>
         `;

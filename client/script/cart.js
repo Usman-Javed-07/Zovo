@@ -1,6 +1,11 @@
+const _cartToken = localStorage.getItem('token');
+const _authHeader = _cartToken ? { "Authorization": `Bearer ${_cartToken}` } : {};
+
 async function loadCart() {
     try {
-        const res = await fetch(`${API_BASE_URL}/api/cart`);
+        const res = await fetch(`${API_BASE_URL}/api/cart`, {
+            headers: _authHeader
+        });
         const cart = await res.json();
 
         const container = document.getElementById("cartContainer");
@@ -45,6 +50,9 @@ async function loadCart() {
             </div>
         `;
 
+        const wrapper = document.getElementById('checkoutBtnWrapper');
+        if (wrapper) wrapper.style.display = 'block';
+
     } catch (error) {
         console.error(error);
     }
@@ -76,12 +84,10 @@ async function updateQuantity(productId, quantity) {
     await fetch(`${API_BASE_URL}/api/cart`, {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            ..._authHeader
         },
-        body: JSON.stringify({
-            productId,
-            quantity
-        })
+        body: JSON.stringify({ productId, quantity })
     });
 
     loadCart();
@@ -90,7 +96,8 @@ async function updateQuantity(productId, quantity) {
 
 async function removeItem(productId) {
     await fetch(`${API_BASE_URL}/api/cart/${productId}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: _authHeader
     });
 
     loadCart();
