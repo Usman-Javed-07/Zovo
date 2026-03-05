@@ -4,6 +4,9 @@ const _user  = JSON.parse(localStorage.getItem('user') || 'null');
 if (!_token || !_user) {
     window.location.href = './login.html';
 }
+if (_user && _user.role === 'admin') {
+    window.location.href = './admin-orders.html';
+}
 
 const headers = () => ({
     'Content-Type': 'application/json',

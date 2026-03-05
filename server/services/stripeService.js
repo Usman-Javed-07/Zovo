@@ -1,5 +1,6 @@
 const stripe     = require('../config/stripe');
 const OrderModel = require('../models/orderModel');
+const CartModel  = require('../models/cartModel');
 
 class StripeService {
 
@@ -45,6 +46,7 @@ class StripeService {
             if (order) {
                 await OrderModel.updatePaymentStatus(order.id, 'paid');
                 await OrderModel.updateStatus(order.id, 'confirmed');
+                await CartModel.clearCart(order.user_id);
             }
         }
     }

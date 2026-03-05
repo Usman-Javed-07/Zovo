@@ -100,8 +100,10 @@ class OrderService {
             await CouponModel.recordUsage(coupon.id, userId, orderId);
         }
 
-        // 9 — Clear cart
-        await CartModel.clearCart(userId);
+        // 9 — Clear cart (Stripe clears on webhook after confirmed payment)
+        if (payment_method !== 'stripe') {
+            await CartModel.clearCart(userId);
+        }
 
         return { orderId, final_amount };
     }

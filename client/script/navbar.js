@@ -58,9 +58,10 @@ function loadUser() {
             ${user.role === "admin" ? `
                 <a href="./admin-orders.html">Admin Panel</a>
                 <a href="./add-product.html">Add Product</a>
-            ` : ""}
-            <a href="./order-history.html">My Orders</a>
-            <a href="./wallet.html">My Wallet</a>
+            ` : `
+                <a href="./order-history.html">My Orders</a>
+                <a href="./wallet.html">My Wallet</a>
+            `}
             <a href="./profile.html">Profile</a>
             <button onclick="logout()">Logout</button>
         `;
@@ -120,7 +121,17 @@ function initDropdown() {
     });
 }
 
+// ── Hide cart icon for admin ─────────────────────────────────────────────────
+function hideCartForAdmin() {
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    if (user && user.role === 'admin') {
+        const cartEl = document.querySelector('.cart-icon-wrapper');
+        if (cartEl) cartEl.style.display = 'none';
+    }
+}
+
 // ── Init ────────────────────────────────────────────────────────────────────
 loadCartCount();
 loadUser();
 initDropdown();
+hideCartForAdmin();

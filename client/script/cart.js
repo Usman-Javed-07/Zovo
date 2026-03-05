@@ -1,4 +1,6 @@
 const _cartToken = localStorage.getItem('token');
+const _cartUser  = JSON.parse(localStorage.getItem('user') || 'null');
+if (_cartUser && _cartUser.role === 'admin') window.location.href = './admin-orders.html';
 const _authHeader = _cartToken ? { "Authorization": `Bearer ${_cartToken}` } : {};
 
 async function loadCart() {
