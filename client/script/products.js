@@ -94,6 +94,43 @@ async function loadProducts() {
         .join('');
 
     if (socket) products.forEach((p) => socket.emit('join_product', p.id));
+
+    applySearchFilter();
+}
+
+// ── Filter products by ?q= URL param ─────────────────────────
+function applySearchFilter() {
+    const q = new URLSearchParams(window.location.search).get('q');
+    if (!q) return;
+
+    // Pre-fill the navbar search input
+    const input = document.querySelector('.search-bar input');
+    if (input) input.value = q;
+
+    const query = q.toLowerCase();
+    let visible = 0;
+
+    document.querySelectorAll('#productList .card-item').forEach(card => {
+        const name = card.querySelector('.card-heading')?.textContent.toLowerCase() || '';
+        const desc = card.querySelector('.card-para')?.textContent.toLowerCase() || '';
+        const show = name.includes(query) || desc.includes(query);
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+    });
+
+    // Show results header above the product list
+    const list   = document.getElementById('productList');
+    const header = document.createElement('div');
+    header.className = 'search-results-header';
+    header.innerHTML = `
+        <span>${visible} result${visible !== 1 ? 's' : ''} for "<strong>${q}</strong>"</span>
+        <a href="./products.html" class="search-clear-btn">✕ Clear</a>
+    `;
+    list.parentNode.insertBefore(header, list);
+
+    if (visible === 0) {
+        list.innerHTML = '<p class="loading-text">No products found matching your search.</p>';
+    }
 }
 
 loadProducts();
