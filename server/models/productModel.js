@@ -23,6 +23,28 @@ const Product = {
             ORDER  BY p.created_at DESC
         `);
         return rows;
+    },
+
+    findById: async (id) => {
+        const [rows] = await db.execute('SELECT * FROM products WHERE id = ?', [id]);
+        return rows[0] || null;
+    },
+
+    update: async (id, data) => {
+        const fields = [];
+        const values = [];
+        if (data.name        !== undefined) { fields.push('name = ?');        values.push(data.name); }
+        if (data.description !== undefined) { fields.push('description = ?'); values.push(data.description); }
+        if (data.material    !== undefined) { fields.push('material = ?');    values.push(data.material); }
+        if (data.price       !== undefined) { fields.push('price = ?');       values.push(data.price); }
+        if (data.image       !== undefined) { fields.push('image = ?');       values.push(data.image); }
+        if (!fields.length) return;
+        values.push(id);
+        await db.execute(`UPDATE products SET ${fields.join(', ')} WHERE id = ?`, values);
+    },
+
+    delete: async (id) => {
+        await db.execute('DELETE FROM products WHERE id = ?', [id]);
     }
 };
 

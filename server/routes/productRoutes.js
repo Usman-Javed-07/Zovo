@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const productController = require('../controllers/productController');
-const { optionalAuth }  = require('../middlewares/authMiddleware');
+const { optionalAuth, protect, authorize } = require('../middlewares/authMiddleware');
 
 // Configure multer for image upload
 const storage = multer.diskStorage({
@@ -18,7 +18,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Routes
-router.post('/', upload.single('image'), productController.createProduct);
-router.get('/', optionalAuth, productController.getProducts);
+router.post('/',    upload.single('image'), productController.createProduct);
+router.get('/',     optionalAuth,           productController.getProducts);
+router.put('/:id',  protect, authorize(['admin']), upload.single('image'), productController.updateProduct);
+router.delete('/:id', protect, authorize(['admin']), productController.deleteProduct);
 
 module.exports = router;

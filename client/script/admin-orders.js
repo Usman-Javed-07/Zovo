@@ -24,6 +24,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
         if (btn.dataset.tab === 'shipments' && !window._shipmentsLoaded) { loadShipments(); window._shipmentsLoaded = true; }
         if (btn.dataset.tab === 'messages'  && !window._messagesLoaded)  { loadMessages();  window._messagesLoaded  = true; }
         if (btn.dataset.tab === 'reviews'   && !window._reviewsLoaded)   { loadReviews();   window._reviewsLoaded   = true; }
+        if (btn.dataset.tab === 'products'  && !window._productsLoaded)  { loadAdminProducts(); window._productsLoaded = true; }
     });
 });
 
@@ -530,6 +531,169 @@ async function loadReviews() {
                 } else alert(data.message);
             });
         });
+    } catch (err) {
+        container.innerHTML = `<p class="loading-text" style="color:#f44336">${err.message}</p>`;
+    }
+}
+
+// ─────────────────────────────────
+// PRODUCTS TAB
+// ─────────────────────────────────
+async function loadAdminProducts() {
+    const container = document.getElementById('adminProductsContainer');
+    try {
+        const res  = await fetch(`${API_BASE_URL}/api/products`, { headers: authHeaders() });
+        const data = await res.json();
+
+        if (!data.length) {
+            container.innerHTML = '<p class="loading-text">No products yet.</p>';
+            return;
+        }
+
+        container.innerHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Material</th>
+                        <th>Price</th>
+                        <th>Rating</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${data.map(p => `
+                        <tr data-product-id="${p.id}">
+                            <td>#${p.id}</td>
+                            <td>
+                                ${p.image
+                                    ? `<img src="${API_BASE_URL}${p.image}" style="width:48px;height:48px;object-fit:cover;border-radius:6px;">`
+                                    : '<span style="color:#555">—</span>'}
+                            </td>
+                            <td>${p.name}</td>
+                            <td>${p.material || '—'}</td>
+                            <td>$${Number(p.price).toFixed(2)}</td>
+                            <td>${p.avg_rating > 0 ? '★ ' + p.avg_rating + ' (' + p.rating_count + ')' : '—'}</td>
+                            <td class="au-actions">
+                                <button class="btn-sm btn-update edit-product-btn" data-id="${p.id}">Edit</button>
+                                <button class="btn-sm btn-delete delete-product-btn" data-id="${p.id}" data-name="${p.name}">Delete</button>
+                            </td>
+                        </tr>
+                        <tr class="product-edit-row" id="edit-row-${p.id}" style="display:none;">
+                            <td colspan="7">
+                                <form class="product-edit-form" data-id="${p.id}" enctype="multipart/form-data">
+                                    <div class="form-row" style="flex-wrap:wrap;gap:10px;align-items:flex-end;">
+                                        <div class="form-group" style="margin:0;flex:1;min-width:140px;">
+                                            <label>Name</label>
+                                            <input type="text" name="name" value="${p.name}" required>
+                                        </div>
+                                        <div class="form-group" style="margin:0;flex:2;min-width:180px;">
+                                            <label>Description</label>
+                                            <input type="text" name="description" value="${p.description || ''}">
+                                        </div>
+                                        <div class="form-group" style="margin:0;flex:1;min-width:120px;">
+                                            <label>Material</label>
+                                            <input type="text" name="material" value="${p.material || ''}">
+                                        </div>
+                                        <div class="form-group" style="margin:0;width:110px;">
+                                            <label>Price ($)</label>
+                                            <input type="number" name="price" value="${p.price}" step="0.01" required>
+                                        </div>
+                                        <div class="form-group" style="margin:0;flex:1;min-width:140px;">
+                                            <label>New Image (optional)</label>
+                                            <input type="file" name="image" accept="image/*">
+                                        </div>
+                                        <div style="display:flex;gap:8px;align-items:center;">
+                                            <button type="submit" class="btn-sm btn-approve">Save</button>
+                                            <button type="button" class="btn-sm cancel-edit-btn" data-id="${p.id}">Cancel</button>
+                                            <span class="edit-product-status" id="edit-status-${p.id}"></span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+
+        // Toggle edit rows
+        container.querySelectorAll('.edit-product-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const editRow = document.getElementById(`edit-row-${btn.dataset.id}`);
+                const isOpen  = editRow.style.display !== 'none';
+                editRow.style.display = isOpen ? 'none' : 'table-row';
+                btn.textContent = isOpen ? 'Edit' : 'Close';
+            });
+        });
+
+        container.querySelectorAll('.cancel-edit-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const editRow = document.getElementById(`edit-row-${btn.dataset.id}`);
+                editRow.style.display = 'none';
+                const mainRow = container.querySelector(`tr[data-product-id="${btn.dataset.id}"]`);
+                mainRow.querySelector('.edit-product-btn').textContent = 'Edit';
+            });
+        });
+
+        // Submit edit
+        container.querySelectorAll('.product-edit-form').forEach(form => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const id     = form.dataset.id;
+                const status = document.getElementById(`edit-status-${id}`);
+                const formData = new FormData(form);
+
+                const res  = await fetch(`${API_BASE_URL}/api/products/${id}`, {
+                    method:  'PUT',
+                    headers: { 'Authorization': `Bearer ${_token}` },
+                    body:    formData
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    status.textContent = 'Saved!';
+                    status.style.color = '#4caf50';
+                    setTimeout(() => {
+                        window._productsLoaded = false;
+                        loadAdminProducts();
+                    }, 800);
+                } else {
+                    status.textContent = data.message || 'Failed';
+                    status.style.color = '#f44336';
+                }
+            });
+        });
+
+        // Delete product
+        container.querySelectorAll('.delete-product-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                if (!confirm(`Delete product "${btn.dataset.name}"? This cannot be undone.`)) return;
+
+                const res  = await fetch(`${API_BASE_URL}/api/products/${btn.dataset.id}`, {
+                    method:  'DELETE',
+                    headers: authHeaders()
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    const mainRow = container.querySelector(`tr[data-product-id="${btn.dataset.id}"]`);
+                    const editRow = document.getElementById(`edit-row-${btn.dataset.id}`);
+                    [mainRow, editRow].forEach(row => {
+                        if (row) {
+                            row.style.transition = 'opacity 0.3s';
+                            row.style.opacity    = '0';
+                            setTimeout(() => row.remove(), 300);
+                        }
+                    });
+                } else {
+                    alert(data.message);
+                }
+            });
+        });
+
     } catch (err) {
         container.innerHTML = `<p class="loading-text" style="color:#f44336">${err.message}</p>`;
     }
