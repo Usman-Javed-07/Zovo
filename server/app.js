@@ -13,7 +13,8 @@ const couponRoutes   = require('./routes/couponRoutes');
 const walletRoutes   = require('./routes/walletRoutes');
 const refundRoutes   = require('./routes/refundRoutes');
 const shipmentRoutes = require('./routes/shipmentRoutes');
-const stripeRoutes   = require('./routes/stripeRoutes');   // must be before express.json()
+const stripeRoutes     = require('./routes/stripeRoutes');   // must be before express.json()
+const favoriteRoutes   = require('./routes/favoriteRoutes');
 
 const { protect } = require('./middlewares/authMiddleware');
 
@@ -47,6 +48,7 @@ app.use('/api/coupons',   couponRoutes);
 app.use('/api/wallet',    walletRoutes);
 app.use('/api/refunds',   refundRoutes);
 app.use('/api/shipments', shipmentRoutes);
+app.use('/api/favorites', favoriteRoutes);
 
 // ── Test protected route ──
 app.get('/api/protected', protect, (req, res) => {

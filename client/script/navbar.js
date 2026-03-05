@@ -61,6 +61,7 @@ function loadUser() {
             ` : `
                 <a href="./order-history.html">My Orders</a>
                 <a href="./wallet.html">My Wallet</a>
+                <a href="./wishlist.html">My Wishlist</a>
             `}
             <a href="./profile.html">Profile</a>
             <button onclick="logout()">Logout</button>

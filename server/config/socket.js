@@ -10,9 +10,18 @@ const init = (httpServer) => {
     });
 
     _io.on('connection', (socket) => {
-        // Each user joins a room named after their userId
+        // User room — for order updates, wallet notifications etc.
         socket.on('join', (userId) => {
             socket.join(`user_${userId}`);
+        });
+
+        // Product room — visitors join to receive real-time like count updates
+        socket.on('join_product', (productId) => {
+            socket.join(`product_${productId}`);
+        });
+
+        socket.on('leave_product', (productId) => {
+            socket.leave(`product_${productId}`);
         });
 
         socket.on('disconnect', () => {});

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zovo — Products</title>
+    <title>Zovo — My Wishlist</title>
     <script src="./script/loader.js"></script>
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="icon" type="image/png" href="./assets/tab-img.png">
@@ -15,7 +15,7 @@
     <header class="header">
         <nav class="navbar">
             <div class="logo">
-                <a href="./index.html"> <img src="./assets/logo.png" alt="logo"></a>
+                <a href="./index.html"><img src="./assets/logo.png" alt="logo"></a>
             </div>
             <div class="search-bar">
                 <input type="text" placeholder="Search...">
@@ -47,32 +47,30 @@
     </header>
 
     <main>
-
-        <!-- Page Header -->
         <section class="products-page-header">
             <div class="about-hero-overlay"></div>
             <div class="about-hero-content">
-                <span class="about-label">Our Collection</span>
-                <h1 class="about-hero-heading">Shop All Products</h1>
-                <p class="about-hero-sub">Curated fashion for every style, occasion, and season.</p>
+                <span class="about-label">My Collection</span>
+                <h1 class="about-hero-heading">My Wishlist</h1>
+                <p class="about-hero-sub">Products you love, saved in one place.</p>
             </div>
         </section>
 
-        <!-- Products Listing -->
         <div class="products-listing-heading">
-            <h2>All Products</h2>
-            <span class="about-label">Zovo Collection</span>
+            <h2>Saved Items</h2>
+            <span class="about-label" id="wishlistCount"></span>
         </div>
 
-        <div id="productList" class="shopping-cards"></div>
+        <div id="wishlistGrid" class="shopping-cards"></div>
 
+        <!-- Pagination -->
+        <div class="wishlist-pagination" id="paginationBar"></div>
     </main>
 
     <script src="./script/config.js"></script>
     <script src="./script/script.js"></script>
     <script src="./script/navbar.js"></script>
-    <script src="http://localhost:5000/socket.io/socket.io.js"></script>
-    <script src="./script/products.js"></script>
+    <script src="./script/wishlist.js"></script>
 </body>
 
 </html>

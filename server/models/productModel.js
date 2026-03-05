@@ -4,8 +4,8 @@ const Product = {
     create: async (data) => {
         const sql = `
             INSERT INTO products
-            (name, description, material, price, rating, rating_count, image, is_favorite)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            (name, description, material, price, rating, rating_count, image)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
         const values = [
             data.name,
@@ -14,8 +14,7 @@ const Product = {
             data.price,
             data.rating || 0,
             data.rating_count || 0,
-            data.image,
-            data.is_favorite || 0
+            data.image
         ];
         const [result] = await db.execute(sql, values);
         return result;

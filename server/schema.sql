@@ -122,6 +122,19 @@ CREATE TABLE IF NOT EXISTS shipments (
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
 );
 
+-- Favorites / Wishlist
+CREATE TABLE IF NOT EXISTS favorites (
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    user_id     INT NOT NULL,
+    product_id  INT NOT NULL,
+    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY  uq_user_product (user_id, product_id),
+    INDEX       idx_fav_user    (user_id),
+    INDEX       idx_fav_product (product_id),
+    FOREIGN KEY (user_id)    REFERENCES users(id)    ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
+
 -- Sample admin coupon
 INSERT IGNORE INTO coupons (code, discount_type, discount_value, min_order_amount, max_uses, expires_at, is_active)
 VALUES ('WELCOME10', 'percentage', 10.00, 50.00, 100, DATE_ADD(NOW(), INTERVAL 1 YEAR), 1);
