@@ -14,7 +14,11 @@ const walletRoutes   = require('./routes/walletRoutes');
 const refundRoutes   = require('./routes/refundRoutes');
 const shipmentRoutes = require('./routes/shipmentRoutes');
 const stripeRoutes     = require('./routes/stripeRoutes');   // must be before express.json()
-const favoriteRoutes   = require('./routes/favoriteRoutes');
+const favoriteRoutes      = require('./routes/favoriteRoutes');
+const ratingRoutes        = require('./routes/ratingRoutes');
+const contactRoutes       = require('./routes/contactRoutes');
+const notificationRoutes  = require('./routes/notificationRoutes');
+const adminUserRoutes     = require('./routes/adminUserRoutes');
 
 const { protect } = require('./middlewares/authMiddleware');
 
@@ -48,7 +52,11 @@ app.use('/api/coupons',   couponRoutes);
 app.use('/api/wallet',    walletRoutes);
 app.use('/api/refunds',   refundRoutes);
 app.use('/api/shipments', shipmentRoutes);
-app.use('/api/favorites', favoriteRoutes);
+app.use('/api/favorites',      favoriteRoutes);
+app.use('/api/ratings',        ratingRoutes);
+app.use('/api/contact',        contactRoutes);
+app.use('/api/notifications',  notificationRoutes);
+app.use('/api/admin/users',    adminUserRoutes);
 
 // ── Test protected route ──
 app.get('/api/protected', protect, (req, res) => {

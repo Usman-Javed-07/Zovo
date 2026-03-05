@@ -38,6 +38,7 @@ class AuthService {
         const user = await UserModel.findByEmail(email);
         if (!user) throw new Error("Invalid credentials");
         if (!user.is_verified) throw new Error("Please verify your account first");
+        if (user.is_banned) throw new Error(user.ban_reason || "Your account has been suspended. Please contact support.");
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) throw new Error("Invalid credentials");

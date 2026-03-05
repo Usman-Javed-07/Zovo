@@ -1,4 +1,5 @@
-const FavoriteModel = require('../models/favoriteModel');
+const FavoriteModel  = require('../models/favoriteModel');
+const ratingService  = require('./ratingService');
 const db = require('../config/db');
 
 /**
@@ -23,7 +24,9 @@ exports.toggleFavorite = async (userId, productId) => {
  * Get paginated wishlist for a user.
  */
 exports.getUserFavorites = async (userId, page, limit) => {
-    return FavoriteModel.getUserFavorites(userId, page, limit);
+    const data = await FavoriteModel.getUserFavorites(userId, page, limit);
+    data.products = await ratingService.enrichProductsWithUserRatings(data.products, userId);
+    return data;
 };
 
 /**

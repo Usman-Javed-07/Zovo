@@ -19,9 +19,11 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
         document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
 
         // Lazy load on first click
-        if (btn.dataset.tab === 'refunds' && !window._refundsLoaded)  { loadRefunds();   window._refundsLoaded  = true; }
-        if (btn.dataset.tab === 'coupons' && !window._couponsLoaded)  { loadCoupons();   window._couponsLoaded  = true; }
+        if (btn.dataset.tab === 'refunds'   && !window._refundsLoaded)   { loadRefunds();   window._refundsLoaded   = true; }
+        if (btn.dataset.tab === 'coupons'   && !window._couponsLoaded)   { loadCoupons();   window._couponsLoaded   = true; }
         if (btn.dataset.tab === 'shipments' && !window._shipmentsLoaded) { loadShipments(); window._shipmentsLoaded = true; }
+        if (btn.dataset.tab === 'messages'  && !window._messagesLoaded)  { loadMessages();  window._messagesLoaded  = true; }
+        if (btn.dataset.tab === 'reviews'   && !window._reviewsLoaded)   { loadReviews();   window._reviewsLoaded   = true; }
     });
 });
 
@@ -338,6 +340,200 @@ document.getElementById('shipmentForm').addEventListener('submit', async (e) => 
         msg.className   = 'shipment-msg error';
     }
 });
+
+// ─────────────────────────────────
+// MESSAGES TAB
+// ─────────────────────────────────
+async function loadMessages() {
+    const container = document.getElementById('adminMessagesContainer');
+    try {
+        const res  = await fetch(`${API_BASE_URL}/api/contact/admin`, { headers: authHeaders() });
+        const data = await res.json();
+
+        if (!data.success || !data.data.length) {
+            container.innerHTML = '<p class="loading-text">No messages yet.</p>';
+            return;
+        }
+
+        container.innerHTML = `
+            <table>
+                <thead>
+                    <tr><th>#</th><th>Name</th><th>Email</th><th>Subject</th><th>Message</th><th>Date</th><th>Reply</th></tr>
+                </thead>
+                <tbody>
+                    ${data.data.map(m => `
+                        <tr>
+                            <td>#${m.id}</td>
+                            <td>${m.name}${m.registered_name ? '<br><small style="color:#5a97f9">Registered</small>' : ''}</td>
+                            <td>${m.email}</td>
+                            <td>${m.subject}</td>
+                            <td class="admin-msg-text">${m.message}</td>
+                            <td>${new Date(m.created_at).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' })}</td>
+                            <td>
+                                <button class="btn-sm btn-primary reply-msg-btn" data-id="${m.id}">Reply</button>
+                                <div class="reply-form" id="reply-form-${m.id}" style="display:none;margin-top:8px">
+                                    <textarea class="reply-textarea" rows="3" placeholder="Type your reply..."></textarea>
+                                    <button class="btn-sm btn-approve send-reply-btn" data-id="${m.id}">Send</button>
+                                    <span class="reply-status" id="reply-status-${m.id}"></span>
+                                </div>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+
+        // Toggle reply forms
+        container.querySelectorAll('.reply-msg-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const form = document.getElementById(`reply-form-${btn.dataset.id}`);
+                form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+
+        // Send reply
+        container.querySelectorAll('.send-reply-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const id      = btn.dataset.id;
+                const form    = document.getElementById(`reply-form-${id}`);
+                const reply   = form.querySelector('.reply-textarea').value.trim();
+                const status  = document.getElementById(`reply-status-${id}`);
+                if (!reply) { status.textContent = 'Reply cannot be empty.'; return; }
+
+                btn.disabled = true;
+                const res  = await fetch(`${API_BASE_URL}/api/contact/admin/${id}/reply`, {
+                    method:  'POST',
+                    headers: authHeaders(),
+                    body:    JSON.stringify({ reply })
+                });
+                const data = await res.json();
+                btn.disabled = false;
+
+                if (data.success) {
+                    // Fade out and remove the row
+                    const row = btn.closest('tr');
+                    if (row) {
+                        row.style.transition = 'opacity 0.4s ease';
+                        row.style.opacity    = '0';
+                        setTimeout(() => {
+                            row.remove();
+                            // Show empty state if no rows left
+                            const tbody = container.querySelector('tbody');
+                            if (tbody && !tbody.querySelector('tr')) {
+                                container.innerHTML = '<p class="loading-text">No messages yet.</p>';
+                            }
+                        }, 400);
+                    }
+                } else {
+                    status.textContent = data.message || 'Failed to send.';
+                    status.style.color = '#f44336';
+                }
+            });
+        });
+
+    } catch (err) {
+        container.innerHTML = `<p class="loading-text" style="color:#f44336">${err.message}</p>`;
+    }
+}
+
+// ─────────────────────────────────
+// REVIEWS TAB
+// ─────────────────────────────────
+async function loadReviews() {
+    const container = document.getElementById('adminReviewsContainer');
+    try {
+        const res  = await fetch(`${API_BASE_URL}/api/ratings/admin/all`, { headers: authHeaders() });
+        const data = await res.json();
+
+        if (!data.success || !data.data.length) {
+            container.innerHTML = '<p class="loading-text">No reviews yet.</p>';
+            return;
+        }
+
+        container.innerHTML = data.data.map(r => {
+            const stars   = Array.from({ length: 5 }, (_, i) =>
+                `<span class="star${i < r.rating ? ' filled' : ''}">★</span>`
+            ).join('');
+            const initial = r.user_name ? r.user_name.charAt(0).toUpperCase() : '?';
+            const avatar  = r.user_image
+                ? `<img class="reviewer-avatar-img" src="${API_BASE_URL}${r.user_image}" alt="${r.user_name}">`
+                : `<div class="reviewer-avatar">${initial}</div>`;
+            const dt   = new Date(r.updated_at);
+            const date = dt.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+
+            return `
+                <div class="admin-review-card${r.is_hidden ? ' review-hidden' : ''}" data-review-id="${r.id}">
+                    ${r.is_hidden ? '<div class="review-hidden-badge">Hidden</div>' : ''}
+                    <div class="admin-review-product">
+                        <img src="${API_BASE_URL}${r.product_image}" alt="${r.product_name}" class="admin-review-product-img">
+                        <div>
+                            <span class="admin-review-product-name">${r.product_name}</span>
+                            <small>Product #${r.product_id}</small>
+                        </div>
+                    </div>
+                    <div class="admin-review-user">
+                        ${avatar}
+                        <div>
+                            <span class="reviewer-name">${r.user_name}</span>
+                            <small>${r.user_email}</small>
+                        </div>
+                    </div>
+                    <div class="star-row">${stars}</div>
+                    ${r.feedback ? `<p class="admin-review-feedback">${r.feedback}</p>` : '<p class="admin-review-no-text">No written review</p>'}
+                    <span class="admin-review-date">${date}</span>
+                    <div class="admin-review-actions">
+                        ${r.is_hidden
+                            ? `<button class="btn-sm btn-approve unhide-review-btn" data-id="${r.id}">Restore</button>`
+                            : `<button class="btn-sm btn-update hide-review-btn" data-id="${r.id}">Hide</button>`
+                        }
+                        <button class="btn-sm btn-delete delete-review-btn" data-id="${r.id}">Delete</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        // Hide review
+        container.querySelectorAll('.hide-review-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                if (!confirm('Hide this review? The user will be notified.')) return;
+                const res  = await fetch(`${API_BASE_URL}/api/ratings/admin/${btn.dataset.id}/hide`, {
+                    method: 'PATCH', headers: authHeaders()
+                });
+                const data = await res.json();
+                if (data.success) { window._reviewsLoaded = false; loadReviews(); }
+                else alert(data.message);
+            });
+        });
+
+        // Unhide review
+        container.querySelectorAll('.unhide-review-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const res  = await fetch(`${API_BASE_URL}/api/ratings/admin/${btn.dataset.id}/unhide`, {
+                    method: 'PATCH', headers: authHeaders()
+                });
+                const data = await res.json();
+                if (data.success) { window._reviewsLoaded = false; loadReviews(); }
+                else alert(data.message);
+            });
+        });
+
+        // Delete review
+        container.querySelectorAll('.delete-review-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                if (!confirm('Permanently delete this review? The user will be notified.')) return;
+                const res  = await fetch(`${API_BASE_URL}/api/ratings/admin/${btn.dataset.id}`, {
+                    method: 'DELETE', headers: authHeaders()
+                });
+                const data = await res.json();
+                if (data.success) {
+                    document.querySelector(`.admin-review-card[data-review-id="${btn.dataset.id}"]`)?.remove();
+                } else alert(data.message);
+            });
+        });
+    } catch (err) {
+        container.innerHTML = `<p class="loading-text" style="color:#f44336">${err.message}</p>`;
+    }
+}
 
 // ── Init: load orders on page load ──
 loadOrders();

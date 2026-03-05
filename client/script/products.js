@@ -1,5 +1,5 @@
 /* ──────────────────────────────────────────────────────────────
-   products.js — product listing with favorites & real-time likes
+   products.js — product listing with favorites, ratings & cart
    ────────────────────────────────────────────────────────────── */
 
 const HEART_FILLED = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8445a"><path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Z"/></svg>`;
@@ -13,8 +13,22 @@ if (typeof io !== 'undefined') {
     socket = io(API_BASE_URL);
 }
 
-// ── In-cart product IDs (loaded once on init) ─────────────────
+// ── In-cart product IDs ───────────────────────────────────────
 const cartProductIds = new Set();
+
+// ── Build 5-star HTML for a product ──────────────────────────
+function buildStars(avgRating, ratingCount, userRating, productId) {
+    const avg     = parseFloat(avgRating) || 0;
+    const rounded = Math.round(avg);           // 0–5 integer for display
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+        const filled   = i <= rounded ? ' filled' : '';
+        const selected = userRating && i <= userRating ? ' selected' : '';
+        stars += `<span class="star${filled}${selected}" data-product-id="${productId}" data-star="${i}">★</span>`;
+    }
+    const countLabel = ratingCount > 0 ? `(${ratingCount})` : '';
+    return `<div class="star-row" data-product-id="${productId}">${stars}<span class="rating-count-lbl">${countLabel}</span></div>`;
+}
 
 // ── Card builder ──────────────────────────────────────────────
 function buildProductCard(p, inCart = false) {
@@ -29,9 +43,18 @@ function buildProductCard(p, inCart = false) {
                 <span class="like-count">${likeCount}</span>
             </button>
             <div class="card-details">
-                <div class="cart-item--rating">
-                    <span class="rating-star"><svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px"><path d="m233-120 65-281L80-590l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Z"/></svg></span>
-                    <p>${p.rating} (${p.rating_count})</p>
+                <div class="star-and-reviews">
+                    ${buildStars(p.avg_rating, p.rating_count, p.user_rating, p.id)}
+                    <a class="review-link" href="./reviews.html?id=${p.id}" title="View reviews">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="currentColor"><path d="M240-400h480v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM880-80 720-240H160q-33 0-56.5-23.5T80-320v-480q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-832v752Z"/></svg>
+                    </a>
+                </div>
+                <div class="feedback-panel" data-product-id="${p.id}">
+                    <textarea class="feedback-input" placeholder="Share your experience..." rows="2"></textarea>
+                    <div class="feedback-actions">
+                        <button class="feedback-skip-btn" data-id="${p.id}">Skip</button>
+                        <button class="feedback-submit-btn" data-id="${p.id}">Post Review</button>
+                    </div>
                 </div>
                 <h3 class="card-heading">${p.name}</h3>
                 <p class="card-para">${p.description} <svg xmlns="http://www.w3.org/2000/svg" height="7px" viewBox="0 -960 960 960" width="7px" fill="#e3e3e3"><path d="M281.5-281.5Q200-363 200-480t81.5-198.5Q363-760 480-760t198.5 81.5Q760-597 760-480t-81.5 198.5Q597-200 480-200t-198.5-81.5Z"/></svg> ${p.material}</p>
@@ -45,28 +68,14 @@ function buildProductCard(p, inCart = false) {
         </div>`;
 }
 
-// ── Mark a single button as "in cart" ─────────────────────────
-function markInCart(productId) {
-    const btn = document.querySelector(`button.add-to-cart-btn[data-id="${productId}"]`);
-    if (!btn) return;
-    btn.innerHTML = TICK_ICON;
-    btn.disabled  = true;
-    btn.classList.add('in-cart');
-}
-
-// ── Fetch cart product IDs for logged-in user ─────────────────
+// ── Fetch cart IDs ────────────────────────────────────────────
 async function loadCartIds() {
     const token = localStorage.getItem('token');
     if (!token) return;
     try {
-        const res  = await fetch(`${API_BASE_URL}/api/cart`, {
-            headers: { Authorization: `Bearer ${token}` }
-        });
+        const res  = await fetch(`${API_BASE_URL}/api/cart`, { headers: { Authorization: `Bearer ${token}` } });
         const cart = await res.json();
-        if (Array.isArray(cart)) {
-            // cart rows return p.id (joined from products table)
-            cart.forEach((item) => cartProductIds.add(String(item.id)));
-        }
+        if (Array.isArray(cart)) cart.forEach((item) => cartProductIds.add(String(item.id)));
     } catch (_) {}
 }
 
@@ -84,23 +93,140 @@ async function loadProducts() {
         .map((p) => buildProductCard(p, cartProductIds.has(String(p.id))))
         .join('');
 
-    // Join socket room per product for live like-count updates
-    if (socket) {
-        products.forEach((p) => socket.emit('join_product', p.id));
-    }
+    if (socket) products.forEach((p) => socket.emit('join_product', p.id));
 }
 
 loadProducts();
 
-// ── Real-time like count from socket ─────────────────────────
+// ── Real-time: like count ─────────────────────────────────────
 if (socket) {
     socket.on('like_update', ({ productId, likeCount }) => {
-        const card    = document.querySelector(`.card-item[data-product-id="${productId}"]`);
+        const card = document.querySelector(`.card-item[data-product-id="${productId}"]`);
         if (!card) return;
-        const countEl = card.querySelector('.like-count');
-        if (countEl) countEl.textContent = likeCount;
+        const el = card.querySelector('.like-count');
+        if (el) el.textContent = likeCount;
+    });
+
+    // Real-time: rating update
+    socket.on('rating_update', ({ productId, avgRating, ratingCount }) => {
+        const row = document.querySelector(`.star-row[data-product-id="${productId}"]`);
+        if (!row) return;
+        const rounded = Math.round(parseFloat(avgRating));
+        row.querySelectorAll('.star').forEach((s, i) => {
+            s.classList.toggle('filled', i < rounded);
+        });
+        const lbl = row.querySelector('.rating-count-lbl');
+        if (lbl) lbl.textContent = ratingCount > 0 ? `(${ratingCount})` : '';
     });
 }
+
+// ── Star click — rate product ─────────────────────────────────
+document.addEventListener('click', async (e) => {
+    const star = e.target.closest('.star');
+    if (!star) return;
+
+    const token = localStorage.getItem('token');
+    if (!token) { window.location.href = './login.html'; return; }
+
+    const productId = star.dataset.productId;
+    const rating    = parseInt(star.dataset.star, 10);
+    const row       = document.querySelector(`.star-row[data-product-id="${productId}"]`);
+
+    // Optimistic highlight
+    if (row) {
+        row.querySelectorAll('.star').forEach((s, i) => {
+            s.classList.toggle('selected', i < rating);
+            s.classList.toggle('filled',   i < rating);
+        });
+    }
+
+    try {
+        const res  = await fetch(`${API_BASE_URL}/api/ratings/${productId}`, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body:    JSON.stringify({ rating })
+        });
+        const data = await res.json();
+        if (!data.success) {
+            // Revert optimistic highlight
+            if (row) row.querySelectorAll('.star').forEach((s) => s.classList.remove('selected', 'filled', 'hovered'));
+            if (data.message) alert(data.message);
+            return;
+        }
+        if (!row) return;
+
+        const rounded = Math.round(parseFloat(data.data.avg_rating));
+        row.querySelectorAll('.star').forEach((s, i) => {
+            s.classList.toggle('filled',   i < rounded);
+            s.classList.toggle('selected', i < rating);
+        });
+        const lbl = row.querySelector('.rating-count-lbl');
+        if (lbl) lbl.textContent = `(${data.data.rating_count})`;
+
+        // Show feedback panel so user can optionally leave a written review
+        const panel = document.querySelector(`.feedback-panel[data-product-id="${productId}"]`);
+        if (panel) panel.classList.add('active');
+
+    } catch (err) {
+        console.error('[rate product]', err);
+    }
+});
+
+// ── Feedback submit ───────────────────────────────────────────
+document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.feedback-submit-btn');
+    if (!btn) return;
+
+    const productId = btn.dataset.id;
+    const panel     = document.querySelector(`.feedback-panel[data-product-id="${productId}"]`);
+    const textarea  = panel ? panel.querySelector('.feedback-input') : null;
+    const feedback  = textarea ? textarea.value.trim() : '';
+    if (!feedback) { if (textarea) textarea.focus(); return; }
+
+    const token  = localStorage.getItem('token');
+    btn.disabled = true;
+    try {
+        const res  = await fetch(`${API_BASE_URL}/api/ratings/${productId}/feedback`, {
+            method:  'PATCH',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body:    JSON.stringify({ feedback })
+        });
+        const data = await res.json();
+        if (data.success && panel) {
+            panel.innerHTML = `<p class="feedback-thanks">Thanks for your review! <a href="./reviews.html?id=${productId}">View all reviews →</a></p>`;
+        } else {
+            btn.disabled = false;
+        }
+    } catch (err) {
+        console.error('[feedback submit]', err);
+        btn.disabled = false;
+    }
+});
+
+// ── Feedback skip ─────────────────────────────────────────────
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.feedback-skip-btn');
+    if (!btn) return;
+    const panel = document.querySelector(`.feedback-panel[data-product-id="${btn.dataset.id}"]`);
+    if (panel) panel.classList.remove('active');
+});
+
+// ── Star hover preview ────────────────────────────────────────
+document.addEventListener('mouseover', (e) => {
+    const star = e.target.closest('.star');
+    if (!star) return;
+    const row     = star.closest('.star-row');
+    const hovered = parseInt(star.dataset.star, 10);
+    row.querySelectorAll('.star').forEach((s, i) => {
+        s.classList.toggle('hovered', i < hovered);
+    });
+});
+
+document.addEventListener('mouseout', (e) => {
+    const star = e.target.closest('.star');
+    if (!star) return;
+    star.closest('.star-row').querySelectorAll('.star').forEach((s) => s.classList.remove('hovered'));
+});
 
 // ── Heart button — toggle favorite ───────────────────────────
 document.addEventListener('click', async (e) => {
@@ -108,44 +234,35 @@ document.addEventListener('click', async (e) => {
     if (!btn) return;
 
     const token = localStorage.getItem('token');
-    if (!token) {
-        window.location.href = './login.html';
-        return;
-    }
+    if (!token) { window.location.href = './login.html'; return; }
 
     const productId = btn.dataset.id;
-
     btn.classList.add('heart-pop');
     btn.addEventListener('animationend', () => btn.classList.remove('heart-pop'), { once: true });
 
     try {
         const res  = await fetch(`${API_BASE_URL}/api/favorites/${productId}/toggle`, {
-            method:  'POST',
-            headers: { Authorization: `Bearer ${token}` }
+            method: 'POST', headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();
         if (!data.success) return;
 
         const { action, likeCount } = data.data;
         const liked = action === 'liked';
-
         btn.classList.toggle('liked', liked);
         btn.querySelector('.heart-icon').innerHTML = liked ? HEART_FILLED : HEART_EMPTY;
         btn.querySelector('.like-count').textContent = likeCount;
-
     } catch (err) {
         console.error('[heart toggle]', err);
     }
 });
 
-// ── Add to cart — only fires on <button>, never on navbar <a> ─
+// ── Add to cart ───────────────────────────────────────────────
 document.addEventListener('click', async (e) => {
     const button = e.target.closest('button.add-to-cart-btn');
     if (!button || button.disabled) return;
 
-    const productId = button.dataset.id;
-
-    // Show loading tick immediately
+    const productId  = button.dataset.id;
     button.disabled  = true;
     button.innerHTML = TICK_ICON;
 
@@ -153,25 +270,18 @@ document.addEventListener('click', async (e) => {
         const token = localStorage.getItem('token');
         const res   = await fetch(`${API_BASE_URL}/api/cart`, {
             method:  'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                ...(token ? { Authorization: `Bearer ${token}` } : {})
-            },
-            body: JSON.stringify({ productId })
+            headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+            body:    JSON.stringify({ productId })
         });
         const data = await res.json();
-
         if (data.success) {
-            // Mark permanently as in-cart
             button.classList.add('in-cart');
             cartProductIds.add(String(productId));
             loadCartCount();
         } else {
-            // Revert on failure
             button.innerHTML = CART_ICON;
             button.disabled  = false;
         }
-
     } catch (err) {
         console.error(err);
         button.innerHTML = CART_ICON;

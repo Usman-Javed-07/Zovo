@@ -109,26 +109,27 @@
 
             <!-- Form Column -->
             <div class="contact-form-wrapper">
-                <form class="contact-form">
+                <form class="contact-form" id="contactForm">
                     <div class="contact-form-row">
                         <div class="contact-form-group">
                             <label>Your Name</label>
-                            <input type="text" placeholder="John Doe">
+                            <input type="text" id="contactName" placeholder="John Doe">
                         </div>
                         <div class="contact-form-group">
                             <label>Email Address</label>
-                            <input type="email" placeholder="john@example.com">
+                            <input type="email" id="contactEmail" placeholder="john@example.com">
                         </div>
                     </div>
                     <div class="contact-form-group">
                         <label>Subject</label>
-                        <input type="text" placeholder="How can we help?">
+                        <input type="text" id="contactSubject" placeholder="How can we help?">
                     </div>
                     <div class="contact-form-group">
                         <label>Message</label>
-                        <textarea placeholder="Tell us more about your inquiry..." rows="6"></textarea>
+                        <textarea id="contactMessage" placeholder="Tell us more about your inquiry..." rows="6"></textarea>
                     </div>
-                    <button type="submit" class="contact-submit-btn">Send Message</button>
+                    <button type="submit" class="contact-submit-btn" id="contactSubmitBtn">Send Message</button>
+                    <p id="contactFormMsg" class="contact-form-msg"></p>
                 </form>
             </div>
 
@@ -141,28 +142,50 @@
                 <h2>Frequently asked questions</h2>
             </div>
             <div class="faq-list">
-                <details class="faq-item">
-                    <summary>How long does shipping take?</summary>
-                    <p>Standard shipping takes 3–5 business days. Express options are available at checkout for next-day or same-day delivery in select areas.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>What is your return policy?</summary>
-                    <p>We offer a hassle-free 30-day return window. Items must be unworn and in their original packaging. Refunds are processed within 5–7 business days of receiving the return.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>How do I book a personal styling session?</summary>
-                    <p>Fill out the contact form above or email us at styling@zovo.com. Our team will reach out within 24 hours to schedule your free 30-minute consultation.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>Do you ship internationally?</summary>
-                    <p>Yes! We ship to over 40 countries worldwide. International delivery times vary from 7–14 business days depending on your location and selected shipping method.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>How do I track my order?</summary>
-                    <p>Once your order is dispatched, you'll receive a confirmation email with a live tracking link so you can monitor your delivery every step of the way.</p>
-                </details>
+                <div class="faq-item">
+                    <button class="faq-summary">How long does shipping take?</button>
+                    <div class="faq-body"><p>Standard shipping takes 3–5 business days. Express options are available at checkout for next-day or same-day delivery in select areas.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-summary">What is your return policy?</button>
+                    <div class="faq-body"><p>We offer a hassle-free 30-day return window. Items must be unworn and in their original packaging. Refunds are processed within 5–7 business days of receiving the return.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-summary">How do I book a personal styling session?</button>
+                    <div class="faq-body"><p>Fill out the contact form above or email us at styling@zovo.com. Our team will reach out within 24 hours to schedule your free 30-minute consultation.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-summary">Do you ship internationally?</button>
+                    <div class="faq-body"><p>Yes! We ship to over 40 countries worldwide. International delivery times vary from 7–14 business days depending on your location and selected shipping method.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-summary">How do I track my order?</button>
+                    <div class="faq-body"><p>Once your order is dispatched, you'll receive a confirmation email with a live tracking link so you can monitor your delivery every step of the way.</p></div>
+                </div>
             </div>
         </section>
+
+        <script>
+            document.querySelectorAll('.faq-summary').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const item   = btn.closest('.faq-item');
+                    const isOpen = item.classList.contains('open');
+
+                    // Close all open items
+                    document.querySelectorAll('.faq-item.open').forEach((openItem) => {
+                        openItem.classList.remove('open');
+                        openItem.querySelector('.faq-body').style.maxHeight = null;
+                    });
+
+                    // Open clicked item if it was closed
+                    if (!isOpen) {
+                        item.classList.add('open');
+                        item.querySelector('.faq-body').style.maxHeight =
+                            item.querySelector('.faq-body').scrollHeight + 'px';
+                    }
+                });
+            });
+        </script>
 
         <!-- Closing CTA -->
         <section class="about-closing">
@@ -177,6 +200,7 @@
     <script src="./script/config.js"></script>
     <script src="./script/script.js"></script>
     <script src="./script/navbar.js"></script>
+    <script src="./script/contact.js"></script>
 </body>
 
 </html>

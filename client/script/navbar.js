@@ -57,6 +57,7 @@ function loadUser() {
         dropdownEl.innerHTML = `
             ${user.role === "admin" ? `
                 <a href="./admin-orders.html">Admin Panel</a>
+                <a href="./admin-users.html">Manage Users</a>
                 <a href="./add-product.html">Add Product</a>
             ` : `
                 <a href="./order-history.html">My Orders</a>
@@ -131,8 +132,130 @@ function hideCartForAdmin() {
     }
 }
 
+// ── Notification Bell ────────────────────────────────────────────────────────
+function timeAgo(date) {
+    const diff = (Date.now() - new Date(date)) / 1000;
+    if (diff < 60)    return 'Just now';
+    if (diff < 3600)  return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+    return Math.floor(diff / 86400) + 'd ago';
+}
+
+async function loadNotifCount() {
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+        const res  = await fetch(`${API_BASE_URL}/api/notifications/unread-count`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        const badge = document.getElementById('notifBadge');
+        if (!badge) return;
+        if (data.count > 0) {
+            badge.textContent = data.count > 99 ? '99+' : data.count;
+            badge.style.display = 'flex';
+        } else {
+            badge.style.display = 'none';
+        }
+    } catch (_) {}
+}
+
+async function loadNotifList() {
+    const list = document.getElementById('notifList');
+    if (!list) return;
+    try {
+        const token = localStorage.getItem('token');
+        const res   = await fetch(`${API_BASE_URL}/api/notifications`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data  = await res.json();
+
+        if (!data.data || !data.data.length) {
+            list.innerHTML = '<p class="notif-empty">No notifications</p>';
+            return;
+        }
+
+        list.innerHTML = data.data.map(n => `
+            <div class="notif-item${n.is_read ? '' : ' unread'}">
+                <div class="notif-title">${n.title}</div>
+                <div class="notif-msg">${n.message}</div>
+                <div class="notif-time">${timeAgo(n.created_at)}</div>
+            </div>
+        `).join('');
+
+        // Mark all as read after opening
+        fetch(`${API_BASE_URL}/api/notifications/read-all`, {
+            method: 'PATCH',
+            headers: { 'Authorization': `Bearer ${token}` }
+        }).then(() => loadNotifCount()).catch(() => {});
+    } catch (_) {
+        list.innerHTML = '<p class="notif-empty">Failed to load</p>';
+    }
+}
+
+function initNotificationBell() {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    const userMenu = document.querySelector('.user-menu');
+    if (!userMenu) return;
+
+    const bell = document.createElement('div');
+    bell.className = 'notif-bell';
+    bell.innerHTML = `
+        <button class="notif-bell-btn" id="notifBellBtn" aria-label="Notifications">
+            <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#e3e3e3">
+                <path d="M160-200v-80h80v-280q0-83 50-147.5T420-792v-28q0-25 17.5-42.5T480-880q25 0 42.5 17.5T540-820v28q80 20 130 84.5T720-560v280h80v80H160Zm320-300Zm0 420q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-280h320v-280q0-66-47-113t-113-47q-66 0-113 47t-47 113v280Z"/>
+            </svg>
+            <span class="notif-badge" id="notifBadge" style="display:none">0</span>
+        </button>
+        <div class="notif-dropdown" id="notifDropdown">
+            <div class="notif-header">
+                <span>Notifications</span>
+                <button class="notif-mark-all" id="notifMarkAll">Mark all read</button>
+            </div>
+            <div class="notif-list" id="notifList">
+                <p class="notif-empty">Loading...</p>
+            </div>
+        </div>
+    `;
+    userMenu.parentNode.insertBefore(bell, userMenu);
+
+    loadNotifCount();
+    // Refresh count every 30 seconds
+    setInterval(loadNotifCount, 30000);
+
+    const bellBtn    = document.getElementById('notifBellBtn');
+    const dropdown   = document.getElementById('notifDropdown');
+    const markAllBtn = document.getElementById('notifMarkAll');
+
+    bellBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.toggle('open');
+        if (isOpen) loadNotifList();
+    });
+
+    markAllBtn.addEventListener('click', async function (e) {
+        e.stopPropagation();
+        const token = localStorage.getItem('token');
+        await fetch(`${API_BASE_URL}/api/notifications/read-all`, {
+            method: 'PATCH',
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        loadNotifCount();
+        loadNotifList();
+    });
+
+    document.addEventListener('click', function () {
+        if (dropdown) dropdown.classList.remove('open');
+    });
+
+    dropdown.addEventListener('click', function (e) { e.stopPropagation(); });
+}
+
 // ── Init ────────────────────────────────────────────────────────────────────
 loadCartCount();
 loadUser();
 initDropdown();
 hideCartForAdmin();
+initNotificationBell();

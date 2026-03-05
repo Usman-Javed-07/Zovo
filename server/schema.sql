@@ -122,6 +122,20 @@ CREATE TABLE IF NOT EXISTS shipments (
     FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
 );
 
+-- Product Ratings (per-user, 1–5 stars)
+CREATE TABLE IF NOT EXISTS product_ratings (
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    user_id     INT NOT NULL,
+    product_id  INT NOT NULL,
+    rating      TINYINT NOT NULL,
+    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY  uq_user_product_rating (user_id, product_id),
+    INDEX       idx_rating_product     (product_id),
+    FOREIGN KEY (user_id)    REFERENCES users(id)    ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
+
 -- Favorites / Wishlist
 CREATE TABLE IF NOT EXISTS favorites (
     id          INT AUTO_INCREMENT PRIMARY KEY,
@@ -133,6 +147,36 @@ CREATE TABLE IF NOT EXISTS favorites (
     INDEX       idx_fav_product (product_id),
     FOREIGN KEY (user_id)    REFERENCES users(id)    ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS contact_messages (
+  id         INT AUTO_INCREMENT PRIMARY KEY,
+  user_id    INT NULL,
+  name       VARCHAR(255) NOT NULL,
+  email      VARCHAR(255) NOT NULL,
+  subject    VARCHAR(255) NOT NULL,
+  message    TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+);
+
+-- ── Migrations (run once if columns/tables don't exist yet) ─────────────────
+-- ALTER TABLE users ADD COLUMN is_banned TINYINT(1) DEFAULT 0;
+-- ALTER TABLE users ADD COLUMN ban_reason VARCHAR(500) NULL;
+-- ALTER TABLE product_ratings ADD COLUMN is_hidden TINYINT(1) DEFAULT 0;
+-- ALTER TABLE product_ratings ADD COLUMN feedback TEXT NULL AFTER rating;
+
+-- Notifications
+CREATE TABLE IF NOT EXISTS notifications (
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    user_id    INT NOT NULL,
+    type       VARCHAR(50)  NOT NULL,
+    title      VARCHAR(255) NOT NULL,
+    message    TEXT NOT NULL,
+    is_read    TINYINT(1) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_notif_user (user_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Sample admin coupon

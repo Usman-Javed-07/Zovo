@@ -8,7 +8,7 @@ class UserModel {
 
     static async findById(id) {
         const [rows] = await db.execute(
-            "SELECT id,name,email,image,role,is_verified FROM users WHERE id = ?",
+            "SELECT id,name,email,image,role,is_verified,is_banned,ban_reason FROM users WHERE id = ?",
             [id]
         );
         return rows[0];

@@ -52,13 +52,17 @@ const FavoriteModel = {
         const offset = (page - 1) * limit;
 
         const [products] = await db.execute(
-            `SELECT p.*,
-                    (SELECT COUNT(*) FROM favorites WHERE product_id = p.id) AS like_count,
-                    1                                                          AS is_liked_by_user,
-                    f.created_at                                               AS liked_at
+            `SELECT p.id, p.name, p.description, p.material, p.price, p.image, p.created_at,
+                    ROUND(COALESCE(AVG(r.rating), 0), 1)                        AS avg_rating,
+                    COUNT(r.id)                                                  AS rating_count,
+                    (SELECT COUNT(*) FROM favorites WHERE product_id = p.id)    AS like_count,
+                    1                                                            AS is_liked_by_user,
+                    f.created_at                                                 AS liked_at
              FROM   favorites f
              JOIN   products  p ON p.id = f.product_id
+             LEFT   JOIN product_ratings r ON r.product_id = p.id
              WHERE  f.user_id = ?
+             GROUP  BY p.id, f.created_at
              ORDER  BY f.created_at DESC
              LIMIT  ? OFFSET ?`,
             [userId, limit, offset]
